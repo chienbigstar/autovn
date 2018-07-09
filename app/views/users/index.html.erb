@@ -1,0 +1,33 @@
+<div id="page-content-wrapper">
+  <div class="container-fluid col-md-10">
+  <div>
+    <a class="btn btn-primary" href="<%= new_user_path %>" >Add new</a>
+  </div>
+    <table class="table">
+      <thead>
+      <th>Id</th>
+      <th>Username</th>
+      <th>Role</th>
+      <th>Info</th>
+      <th>Ngày hết hạn</th>
+      <th>Action</th>
+      </thead>
+      <tbody>
+      <% @users.each do |u| %>
+          <tr>
+            <td><%= u.id %></td>
+            <td><label class="label label-info"><%= u.username %></label></td>
+            <td><label class="label label-primary"><%= u.role %></label></td>
+            <td><%= u.info %></td>
+            <td><%= u.expired %></td>
+            <td>
+              <a href="<%= edit_user_path(u) %>">Edit</a>
+              <%= link_to 'Destroy', user_path(u),
+                          data: {:confirm => 'Are you sure?'}, :method => :delete %></td>
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

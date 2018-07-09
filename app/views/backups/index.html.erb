@@ -1,0 +1,42 @@
+<div id="page-content-wrapper">
+  <div class="container-fluid">
+    <div>
+      <a class="btn btn-primary" href="<%= new_backup_path %>">New Backup</a>
+      <form method="get" action="<%= pages_path %>">
+        <input name="search" value="1" hidden><br>
+        <input name="value" value="<%= @value %>">
+        <button class="btn btn-primary">Ok</button>
+      </form>
+    </div>
+    <table class="table">
+      <thead>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Coin</th>
+        <th>Status</th>
+        <th>Time</th>
+        <th>Description</th>
+        <th>Action</th>
+      </thead>
+      <tbody>
+        <% @backups.each do |p| %>
+          <tr>
+            <td><%= p.id %></td>
+            <td><%= p.name %></td>
+            <td><label class="label label-info"><%= p.coin %></label></td>
+            <%
+               color = p.not_code? ? 'label label-warning' : (p.on? ? 'label label-success' : 'label label-danger')
+            %>
+            <td><label class="<%= color %>"><%= p.status %></label></td>
+            <td><%= p.time %></td>
+            <td><%= p.description %></td>
+            <td><a class="label label-primary" href="<%= edit_backup_path(p) %>">Edit</a>
+              <%= link_to 'Destroy', backup_path(p), class: "label label-danger",
+                          data: {:confirm => 'Are you sure?'}, :method => :delete %></td>
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

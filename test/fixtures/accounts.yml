@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 1
+  email: MyString
+  username: MyString
+  api_key: MyString
+  password: MyString
+  bitcoin: MyString
+  dogecoin: MyString
+
+two:
+  user_id: 1
+  email: MyString
+  username: MyString
+  api_key: MyString
+  password: MyString
+  bitcoin: MyString
+  dogecoin: MyString

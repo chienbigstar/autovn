@@ -1,0 +1,85 @@
+<div id="page-content-wrapper">
+  <div class="container-fluid col-md-12 row">
+    <%= form_for @account, class: 'form-group' do |f| %>
+        <br>
+        <div class="col-md-4 col-lg-4">
+          <label>Status</label>
+          <%= f.select :status, options_for_select([:on, :off, :die]) %><br>
+          <label>Group</label>
+          <%= f.select :group_id, options_for_select(current_user_groups.map{|g| [g.name, g.id]}) %>
+          <br>
+          <label>ip</label>
+          <%= f.text_field :ip, class: 'form-control' %>
+
+          <label>email</label>
+          <%= f.text_field :email, class: 'form-control' %>
+
+          <label>list</label>
+          <%= f.text_field :list, class: 'form-control' %>
+
+          <label>username</label>
+          <%= f.text_field :username, class: 'form-control' %>
+
+          <label>password</label>
+          <%= f.text_field :password, class: 'form-control' %>
+
+          <label>cheapcaptcha_api_key</label>
+          <%= f.text_field :cheapcaptcha_api_key, class: 'form-control' %>
+
+          <label>anticaptcha_api_key</label>
+          <%= f.text_field :anticaptcha_api_key, class: 'form-control' %>
+
+          <label>2_api_key</label>
+          <%= f.text_field :_2captcha_api_key, class: 'form-control' %>
+
+          <br>
+          <%= f.submit :Save, data: { confirm: 'Your confirm message' }, class: 'btn btn-primary' %>
+        </div>
+
+        <div class="col-md-4 col-lg-4">
+          <label>bitcoin</label>
+          <%= f.text_field :bitcoin, class: 'form-control' %>
+
+          <label>dogecoin</label>
+          <%= f.text_field :dogecoin, class: 'form-control' %>
+
+          <label>lite</label>
+          <%= f.text_field :litecoin, class: 'form-control' %>
+
+          <label>ethereum</label>
+          <%= f.text_field :ethereum, class: 'form-control' %>
+
+          <label>bitcoin_cash</label>
+          <%= f.text_field :bitcoin_cash, class: 'form-control' %>
+
+          <label>bitcore</label>
+          <%= f.text_field :bitcore, class: 'form-control' %>
+
+          <label>blackcoin</label>
+          <%= f.text_field :blackcoin, class: 'form-control' %>
+
+          <label>dash</label>
+          <%= f.text_field :dashcoin, class: 'form-control' %>
+
+          <label>peercoin</label>
+          <%= f.text_field :peercoin, class: 'form-control' %>
+
+          <label>primecoin</label>
+          <%= f.text_field :primecoin, class: 'form-control' %>
+
+          <label>potcoin</label>
+          <%= f.text_field :potcoin, class: 'form-control' %>
+
+          <label>kb3coin</label>
+          <%= f.text_field :kb3coin, class: 'form-control' %>
+        </div>
+        <div class="col-md-4 col-lg-4">
+          <label>Info1:</label>
+          <%= f.text_area :info, cols: 40, rows: 10 %><br>
+          <label>Info2:</label>
+          <%= f.text_area :info2, cols: 40, rows: 10 %>
+        </div>
+    <% end %>
+  </div>
+</div>
+

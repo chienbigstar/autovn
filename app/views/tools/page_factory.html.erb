@@ -1,0 +1,42 @@
+<div class="container row">
+  <div class=" col-md col-md-12">
+    <div class="col-md col-md-3">
+      <button id="ok">OK</button>
+      <div id="area_copy">
+      </div>
+      <button id="add_copy">Add</button>
+    </div>
+    <div class="col-md col-md-4">
+      <label>Start id</label><br>
+      <input id="num_start" type="number"><br>
+      <label>Start label</label><br>
+      <input id="label_start"><br>
+      <textarea id="code_start" cols="30" rows="10"></textarea>
+      <hr>
+    </div>
+    <div class="col-md col-md-4" id="result">
+    </div>
+  </div>
+</div>
+
+<script>
+  $id = $('#num_start').val();
+  $label = $('#label_start').val();
+  $index = $id;
+
+  $('#add_copy').click(function(){
+    $('#area_copy').append('<input name="copy"><br>');
+  });
+
+  $('#ok').click(function(){
+    $index++;
+    code = $('#code_start').val();
+
+    $('input[name=copy]').each(function(){
+      code_cp = code.split('p'+$id, '').join('p'+$index);
+      label_cp = $(this).val();
+      code_cp = code_cp.split('/'+$label).join('/'+label_cp);
+      $('#result').append('<label>'+label_cp+'</label><br><textarea>'+code_cp+'</textarea><hr>');
+    });
+  });
+</script>

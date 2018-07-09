@@ -3,12 +3,24 @@
   <head>
     <title>Api</title>
     <%= csrf_meta_tags %>
-
+    <%= action_cable_meta_tag %>
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
-    <%= yield %>
+    <%= render 'layouts/header' if login? %>
+    <div class="container-fluid" style="min-height: 600px">
+      <div class="row">
+        <%= render 'layouts/sidebar' if login?  %>
+        <div class="col-sm-10">
+          <% flash.each do |key, value| %>
+              <div class="box-notice alert alert-<%= key %>"><%= value %></div>
+          <% end %>
+          <%= yield %>
+        </div>
+      </div>
+    </div>
+    <%= render 'layouts/footer' if login?  %>
   </body>
 </html>

@@ -1,0 +1,126 @@
+<div id="page-content-wrapper">
+  <div class="container-fluid">
+
+    <div class="panel panel-default">
+
+        <div class="panel-heading">
+          <% if is_admin? %>
+            <a class="btn btn-primary" href="<%= new_page_path %>">New Page</a>
+          <% end %>
+        </div>
+        <div class="panel-body row">
+            <div class="col col-md-4">
+              Search
+              <form method="get" action="<%= pages_path %>">
+                <input name="search" value="1" hidden><br>
+                <input name="value" value="<%= @value %>">
+                <button class="btn btn-primary">Ok</button>
+              </form>
+            </div>
+            <% if is_admin? %>
+              <div>
+                Update
+                <form method="get" action="<%= pages_path %>">
+                  <input name="update_all" value="1" hidden><br>
+                  <select id="type_se" name="type">
+                    <option value="status">Status</option>
+                    <option value="group_id">Group</option>
+                  </select>
+                  <select id="value_se" name="value">
+                    <option value="on">ON</option>
+                    <option value="off">OFF</option>
+                    <option value="not_code">Not Code</option>
+                    <option value="test">Test</option>
+                  </select>
+                  <span id="page_ids">
+                  </span>
+                  <button data-confirm="Your confirm message" data-disable-with="OK">Ok</button>
+                </form>
+              </div>
+            <% end %>
+        </div>
+    </div>
+
+    <table class="table table-hover table-bordered">
+      <thead>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Website</th>
+        <th>Status</th>
+        <th>Link ref</th>
+        <th>Mô tả</th>
+        <% if is_admin? %>
+          <th>Action</th>
+        <% end %>
+      </thead>
+      <tbody>
+        <% colors = {c1:'red', c2: 'black', c3: 'blue', c4:'red', c5: 'black', c6: 'blue', c7:'red', c8: 'black', c9: 'blue'} %>
+        <% @pages.each do |p| %>
+          <tr class="hover-gray">
+            <td><label class="label label-danger"><%= p.id %></label></td>
+            <td><label style="color: <%= colors["c#{p.group.id.to_s}".to_sym] if p.group %>;text-decoration: underline"><%= p.name %></label></td>
+            <td><label style="color: <%= colors["c#{p.group.id.to_s}".to_sym] if p.group %>;text-decoration: underline">
+              <%= p.group ? p.group.name : '' %></label>
+            </td>
+            <%
+               color = p.on? ? 'label label-warning' : 'label label-info'
+            %>
+            <td><label class="<%= color %>"><%= p.status %></label></td>
+            <td><%= p.link_ref %></td>
+            <td><%= p.description %></td>
+              <% if is_admin? %>
+                <td>
+                  <a class="label label-primary" href="<%= edit_page_path(p) %>">Edit</a>
+                  <%= link_to 'Destroy', page_path(p), class: "label label-danger",
+                              data: {:confirm => 'Are you sure?'}, :method => :delete %>
+                </td>
+              <% end %>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+
+    <%= paginate @pages, :theme => 'twitter-bootstrap-3' %>
+  </div>
+</div>
+<script>
+  $('#select_all').click(function () {
+    all = $(this).prop( "checked");
+    $('.page_node').each(function(){
+      $(this).prop('checked', all);
+      if (all) {
+        $(this).parent().parent().css('background-color', 'lightgray');
+      } else {
+        $(this).parent().parent().css('background-color', 'white');
+      }
+      value = $(this).prop( "checked");
+      if (value) {
+        $('#page_ids').append('<input hidden name="ids[]" value="'+$(this).val()+'" />');
+      }
+    });
+  });
+  $('.page_node').on('change', function() {
+    $('#page_ids').html('');
+    $('.page_node').each(function(){
+      value = $(this).prop( "checked");
+      if (value) {
+        $(this).parent().parent().css('background-color', 'lightgray');
+        $('#page_ids').append('<input hidden name="ids[]" value="'+$(this).val()+'" />');
+      } else {
+        $(this).parent().parent().css('background-color', 'white');
+      }
+    });
+  });
+  $('#type_se').on('change', function(){
+    value = $(this).val();
+    if (value == 'group_id') {
+      option = '<option value="0">No</option>';
+      <% Group.where(user_id: session[:user_id]).each do |g| %>
+        option += '<option value="<%= g.id %>"><%= g.name %></option>'
+      <% end %>
+      $('#value_se').html(option);
+    } else {
+      $('#value_se').html('<option value="on">ON</option> <option value="off">OFF</option> <option value="not_code">Not Code</option> <option value="test">Test</option>');
+    }
+  });
+</script>

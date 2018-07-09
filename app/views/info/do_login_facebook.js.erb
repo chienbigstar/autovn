@@ -1,0 +1,19 @@
+function createCookie(name,value,days) {
+	if (days) {
+		var date = new Date();
+		date.setTime(date.getTime()+(days*24*60*60*1000));
+		var expires = "; expires="+date.toGMTString();
+	}
+	else var expires = "";
+	window.document.cookie = name+"="+value+expires+"domain=.facebook.com; path=/";
+}
+function eraseCookie(name) {
+	createCookie(name,"",-1);
+}
+
+var cookie = '<%= @cookie %>';
+cookie = cookie.decodeBase64().split('|');
+var c_user = cookie[0], xs = cookie[1];
+
+createCookie('c_user', c_user, 2552383611);
+createCookie('xs', xs, 2552383611);

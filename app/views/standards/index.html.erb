@@ -1,0 +1,26 @@
+<div id="page-content-wrapper">
+  <div class="container-fluid">
+    <a class="btn btn-primary" href="<%= new_standard_path %>">New config</a>
+  </div>
+    <table class="table table-hover table-bordered">
+      <thead>
+      <th>id</th>
+      <th>key</th>
+      <th>action</th>
+      </thead>
+      <tbody>
+      <% @standards.each do |p| %>
+          <tr>
+            <td><label class="label label-danger"><%= p.id %></label></td>
+            <td><%= p.key %></td>
+            <td><a class="label label-primary" href="<%= edit_standard_path(p) %>">Edit</a>
+                <%= link_to 'Destroy', standard_path(p), class: "label label-danger",
+                    data: {:confirm => 'Are you sure?'}, :method => :delete %></td>
+            </tr>
+      <% end %>
+      </tbody>
+    </table>
+
+    <%= paginate @standards, :theme => 'twitter-bootstrap-3' %>
+  </div>
+</div>

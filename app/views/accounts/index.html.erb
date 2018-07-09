@@ -1,0 +1,127 @@
+<div id="page-content-wrapper">
+  <div class="container-fluid col-md-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <a class="btn btn-primary" href="<%= new_account_path %>" >Add new</a>
+      </div>
+      <div class="panel-body row">
+        <div class="col-md-4">
+          Update
+          <form method="get" action="<%= accounts_path %>">
+            <input name="update_all" value="1" hidden><br>
+            <select id="se_type" name="type">
+              <option value="list">List</option>
+              <option value="cheapcaptcha_api_key">cheapcaptcha_api_key</option>
+              <option value="anticaptcha_api_key">anticaptcha_api_key</option>
+              <option value="2_api_key">2_api_key</option>
+              <option value="status">status</option>
+            </select>
+            <span id="se_value">
+            <input name="value" />
+          </span>
+            <span id="account_ids">
+          </span>
+            <button data-confirm="Your confirm message" data-disable-with="OK">Ok</button>
+          </form>
+        </div>
+        <div class="col-md-4">
+          Order
+          <form method="get" action="<%= accounts_path %>">
+            <input name="order" value="1" hidden><br>
+            <%= select_tag :type, options_for_select([:list, :ip], params[:type]) %>
+            <%= select_tag :value, options_for_select([:asc, :desc], params[:value]) %>
+            <button>Ok</button>
+          </form>
+        </div>
+        <div class="col-md-4">
+          Only
+          <form method="get" action="<%= accounts_path %>">
+            <input name="only" value="1" hidden><br>
+            <%= select_tag :type, options_for_select([:group]) %>
+            <%= select_tag :value, options_for_select(['all']+current_user_groups.map{|g| [g.name, g.id]}) %>
+            <button>Ok</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <table class="table table-hover table-bordered">
+      <thead>
+      <th><input id="select_all" type="checkbox" /></th>
+      <th>Ip</th>
+      <th>list</th>
+      <th>Email</th>
+      <th>Info1</th>
+      <th>Info2</th>
+      <th>Group</th>
+      <th>Status</th>
+      <th>action</th>
+      </thead>
+      <tbody>
+      <% @accounts.each do |a| %>
+          <tr class="hover-gray">
+            <td><input type="checkbox" class="account_node" value="<%= a.id %>" /></td>
+            <td><label class="label label-danger"><%= a.ip %></label></td>
+            <td><label class="label label-info"><%= a.list %></label></td>
+            <td><%= a.email %></td>
+            <td><%= a.info %></td>
+            <td><%= a.info2 %></td>
+            <%
+              color = 'label label-danger' if a.off?
+              color = 'label label-success' if a.on?
+              color = 'label label-default' if a.die?
+            %>
+            <td><label class="label label-info"><%= a.group ? a.group.name : 'none' %></label></td>
+            <td><label class="<%= color %>"><%= a.status %></label></td>
+            <td>
+              <a class="btn btn-success" href="<%= edit_account_path(a) %>">Edit</a>
+              <%= link_to 'Destroy', account_path(a), class: 'btn btn-danger',
+                          data: {:confirm => 'Are you sure?'}, :method => :delete %>
+              <%= link_to 'Copy', copy_accounts_path(id: a.id), class: 'btn btn-primary' %>
+            </td>
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+
+    <%= paginate @accounts, :theme => 'twitter-bootstrap-3' %>
+  </div>
+</div>
+<script>
+  $('#select_all').click(function () {
+    all = $(this).prop( "checked");
+    $('.account_node').each(function(){
+      $(this).prop('checked', all);
+      if (all) {
+        $(this).parent().parent().css('background-color', 'lightgray');
+      } else {
+        $(this).parent().parent().css('background-color', 'white');
+      }
+      value = $(this).prop( "checked");
+      if (value) {
+        $('#account_ids').append('<input hidden name="ids[]" value="'+$(this).val()+'" />');
+      }
+    });
+  });
+  $('.account_node').on('change', function() {
+    $('#account_ids').html('');
+    $('.account_node').each(function(){
+      value = $(this).prop( "checked");
+      if (value) {
+        $(this).parent().parent().css('background-color', 'lightgray');
+        $('#account_ids').append('<input hidden name="ids[]" value="'+$(this).val()+'" />');
+      } else {
+        $(this).parent().parent().css('background-color', 'white');
+      }
+    });
+  })
+  $('#se_type').on('change', function() {
+    value = $(this).val();
+    if (value == 'status') {
+      $('#se_value').html('<select name="value"><option value="on">On</option><option value="off">Off</option></select>');
+    } else {
+    $('#se_value').html('<input name="value" />');
+    }
+  })
+</script>

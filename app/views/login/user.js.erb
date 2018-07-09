@@ -1,0 +1,7 @@
+<% if @user.id %>
+  window.location.href = '/';
+  window.alert('Tạo thành công');
+  localStorage['isR'] = true;
+<% else %>
+  window.alert('username bị trùng');
+<% end %>

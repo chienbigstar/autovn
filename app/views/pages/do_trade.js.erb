@@ -1,0 +1,12 @@
+data = <%= raw @result.to_json %>;
+localStorage['trade'] = data['data'];
+try {
+  window.location.href = 'imacros://run/?m=run.js';
+} catch (err) {
+  setInterval(function() {
+    localStorage['trade'] = null;
+  }, 1000)
+}
+setInterval(function() {
+  localStorage['trade'] = null;
+}, 1000)

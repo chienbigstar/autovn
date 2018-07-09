@@ -1,0 +1,37 @@
+<div id="page-content-wrapper">
+  <div class="container-fluid">
+    <div class="container">
+      <%= form_tag do_trade_pages_path(id: @page.id), remote: true do %>
+          <label>Tên phương pháp</label>
+          <li class="list-group-item"><b><%= @page.name %></b></li>
+          <br>
+          <label>Mô tả</label>
+          <li class="list-group-item"><textarea class="form-control" cols="100" rows="2"><%= @page.description %></textarea></li>
+          <br>
+          <label>Số tiền chuỗi</label>
+          <li class="list-group-item">
+            <input name="list" class="form-control" required><br>
+            <span style="color:red">
+              Cách nhau bằng dấu phẩy. vd: 1,2,4,8<br>
+              Ô này điền cẩn thận nhé. Nếu mà phương pháp có
+              theo chuỗi thì sẽ đánh đến hết thì thôi, cân nhắc để ko bị cháy tài khoản !!!<br>
+              Còn nếu phương pháp không theo chuỗi thì điền 1 số thôi.:)
+            </span>
+          </li>
+          <br>
+          <label>Dừng khi đạt lời($)</label>
+          <li class="list-group-item"><input name="profit" class="form-control" type="number" required></li>
+          <br>
+          <label>Dừng khi bị lỗ($)</label>
+          <li class="list-group-item">
+          <input name="lose" class="form-control" type="number" required>
+           <span style="color:red">Chỗ này điền số dương nhá(không thêm dấu "-" đằng trước đâu).
+             Điền số tiền bị lỗ đủ để chạy hết chuỗi theo ý bạn nhé. Điền ít quá là ko đủ chuỗi đâu
+            </span>
+          </li>
+          <br>
+          <input type="submit" value="OK" class="btn btn-primary">
+    <% end %>
+    </div>
+  </div>
+</div>

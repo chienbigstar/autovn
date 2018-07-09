@@ -1,0 +1,22 @@
+ <div class="col-sm-2">
+    <!-- Left column -->
+    <a href="#"><strong><i class="glyphicon glyphicon-wrench"></i> Menu</strong></a>
+    <hr>
+    <ul class="nav nav-stacked">
+        <li class="active"> <a href="<%= pages_path %>"><i class="glyphicon glyphicon-home"></i> Trade</a></li>
+        <% if is_admin?  %>
+          <li><a href="<%= accounts_path %>"><i class="glyphicon glyphicon-cog"></i> Account</a></li>
+          <li><a href="<%= groups_path %>"><i class="glyphicon glyphicon-envelope"></i> Group</a></li>
+          <li><a href="<%= standards_path %>"><i class="glyphicon glyphicon-comment"></i> Standard</a></li>
+          <li><a href="<%= slots_path %>"><i class="glyphicon glyphicon-flag"></i> Slot</a></li>
+          <li><a href="<%= users_path %>"><i class="glyphicon glyphicon-user"></i> User</a></li>
+          <li><a href="<%= backups_path %>"><i class="glyphicon glyphicon-off"></i> Tool</a></li>
+        <% elsif is_editor? %>
+          <li><a href="<%= accounts_path %>"><i class="glyphicon glyphicon-cog"></i> Account</a></li>
+          <li><a href="<%= users_path %>"><i class="glyphicon glyphicon-user"></i> User</a></li>
+        <% else  %>
+          <li><a href="<%= accounts_path %>"><i class="glyphicon glyphicon-cog"></i> Account</a></li>
+        <% end  %>
+        <li><a href="<%= info_index_path %>"><i class="glyphicon glyphicon-exclamation-sign"></i> Run.js</a></li>
+    </ul>
+</div>

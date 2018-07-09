@@ -1,0 +1,37 @@
+<div id="page-content-wrapper">
+  <div class="container-fluid col-md-10">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <a class="btn btn-primary" href="<%= new_group_path %>" >Add new</a>
+      </div>
+      <div class="panel-body row">
+      </div>
+    </div>
+
+    <table class="table table-hover table-bordered">
+      <thead>
+      <th>Id</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th>action</th>
+      </thead>
+      <tbody>
+      <% @groups.each do |a| %>
+          <tr class="hover-gray">
+            <td><label class="label label-danger"><%= a.id %></label></td>
+            <td><label class="label label-info"><%= a.name %></label></td>
+            <td><%= a.description %></td>
+            <td>
+              <a class="btn btn-success" href="<%= edit_group_path(a) %>">Edit</a>
+              <%= link_to 'Destroy', group_path(a), class: 'btn btn-danger',
+                          data: {:confirm => 'Are you sure?'}, :method => :delete %>
+            </td>
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+
+    <%= paginate @groups, :theme => 'twitter-bootstrap-3' %>
+  </div>
+</div>

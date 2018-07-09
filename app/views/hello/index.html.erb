@@ -1,2 +1,37 @@
-<h1>Hello#index</h1>
-<p>Find me in app/views/hello/index.html.erb</p>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Api</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <div class="container">
+      <header class="my-4 text-center" style="margin-top:100px">
+        <h1 class="display-3">VNstar</h1>
+        <p class="lead">Auto for everyone</p>
+        <div class='col-md-4 col-md-offset-4' style="border: 1px solid gray; padding: 20px; margin-top: 20px">
+          <%= form_tag login_create_path, remote: true do %>
+            <%= text_field_tag :username, '', class: 'form-control', placeholder: 'Username' %><br>
+            <%= password_field_tag :password, '', class: 'form-control', placeholder: 'Password' %><br>
+            <%= submit_tag :Login, class: 'form-control btn btn-success' %>
+              <br><br>
+          <% end %>
+        </div>
+        <br>
+        <div style="color:red">
+          Khi bạn đăng nhập sang máy khác thì tất cả các máy đã đăng nhập trước đó đều bị đăng xuất ra.
+        </div>
+      </header>
+    </div>
+    <script type="text/javascript">
+      <% if @stopped %>
+          window.alert('có một người khác đã đăng nhập vào tài khoản của bạn.');
+      <% end %>
+    </script>
+  </body>
+</html>
+

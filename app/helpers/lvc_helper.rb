@@ -1,0 +1,2 @@
+module LvcHelper
+end

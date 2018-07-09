@@ -1,0 +1,19 @@
+<div id="page-content-wrapper">
+  <div class="container-fluid col-md-8">
+    <%= form_for @backup, class: 'form-group' do |f| %>
+        <label>name</label>
+        <%= f.text_field :name, class: 'form-control' %><br>
+        <label>Type</label>
+        <%= f.select :coin, Page.coins.collect {|k, v| [k, k]}, class: 'form-control' %><br>
+        <label>Status</label>
+        <%= f.select :status, Page.statuses.collect {|k, v| [k, k]}, class: 'form-control' %><br>
+        <label>time</label>
+        <%= f.number_field :time, class: 'form-control' %><br>
+        <label>description</label>
+        <%= f.text_field :description, class: 'form-control' %><br>
+        <label>content</label>
+        <%= f.text_area :content, class: 'form-control', col: 150, rows: 15 %><br>
+        <%= f.submit :OK, class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>

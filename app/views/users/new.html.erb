@@ -1,0 +1,25 @@
+<div id="page-content-wrapper">
+  <div class="container-fluid col-md-6">
+    <%= form_for @user, class: 'form-group' do |f| %>
+        <label>Username</label>
+        <%= f.text_field :username, class: 'form-control' %>
+
+        <label>Password</label>
+        <%= f.text_field :password, class: 'form-control' %>
+        <br>
+        <label>Info</label>
+        <%= f.text_area :info, class: 'form-control' %>
+        <br>
+        <label>Ngày hết hạn</label>
+        <%= f.date_select :expired, class: 'form-control' %>
+        <br>
+        <br>
+        <% if is_admin? %>
+          <label>Role</label>
+          <%= f.select :role, options_for_select(User.roles.map{|k,v| [k,k]}, :member), class: 'form-control' %>
+          <br><br>
+        <% end %>
+        <%= f.submit :OK %>
+    <% end %>
+  </div>
+</div>
