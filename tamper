@@ -1,0 +1,759 @@
+function InitializeFirebase() {
+  var config = {
+    apiKey: "AIzaSyBBjJZBSsdV7z0rGqrsjT4c_AywTrq13VQ",
+    authDomain: "lvcapi-1eaaf.firebaseapp.com",
+    databaseURL: "https://lvcapi-1eaaf.firebaseio.com",
+    projectId: "lvcapi-1eaaf",
+    storageBucket: "lvcapi-1eaaf.appspot.com",
+    messagingSenderId: "1026360277328"
+  };
+  firebase.initializeApp(config);
+}
+var timeOffset = 5;
+var currentVersion = "1.0";
+var facebookLink = "https://goo.gl/14zvYB";
+var scriptUpdateLink = "https://goo.gl/RREt6W";
+var facebookGroup = "https://goo.gl/14zvYB";
+var ansUrl = "";
+var recaptchaToken = "";
+var captchaApi = "";
+var use2Captcha = false;
+var captchaID = "";
+var paypalEmail = "";
+var goRedeemPage = true;
+var apiCookie = "captchaApi";
+var use2CaptchaCookie = "use2Captcha";
+var paypalEmailCookie = "paypalEmail";
+var redeemTodayCookie = "checkRedeem";
+var isChrome = false;
+var baymackRef = "https://www.baymack.com/lee143";
+var flamzyRef = "https://www.baymack.com/lee143";
+var skylomRef = "https://www.skylom.com/goku11";
+var vipbirdieRef = "https://www.vipbirdie.com/amazing1";
+var snucklsRef = "https://www.snuckls.com/lee";
+var daysLeft = 0;
+
+(function() {
+  isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+  Initialize()
+})();
+
+function Initialize() {
+  if (window.location.href.includes("https://www.youtube.com/embed/")) {
+    var e = (window.location != window.parent.location) ? document.referrer : document.location.href;
+    if (e.includes("baymack") || e.includes("snuckls") || e.includes("skylom") || e.includes("flamzy") || e.includes("grandool") || e.includes("vipbirdie")) {
+      setInterval(function() {
+        var a = document.getElementsByClassName("ytp-large-play-button ytp-button")[0];
+        var b = document.getElementsByTagName("video")[0];
+        var c = b.currentTime > 0 && !b.paused && !b.ended && b.readyState > 2;
+        if (b.paused) {
+          a.click()
+        }
+      }, 3000)
+    }
+  } else if (window.location.href.includes("https://img.youtube.com/")) {
+    InitializeFirebase();
+    setTimeout(function() {
+      var a = document.getElementsByTagName("img")[0];
+      var b = getBase64Image(a);
+      var c = a.src.split("/")[4];
+      firebase.database().ref('/famzyAnswers/' + c).set(b);
+      document.body.removeChild(a)
+    }, 1000)
+  } else {
+    InitializeFirebase();
+    firebase.database().ref('checkUpdate').once('value').then(function(a) {
+      setTimeout(function() {
+        window.location.reload()
+      }, 300000);
+      var b = parseFloat(a.val().currentVersion);
+      var c = parseFloat(currentVersion);
+      var d = a.val().needLogin;
+        if (!d) {
+          SetupAutoWithoutLogin()
+        } else {
+          LoginWithFacebookName()
+        }
+    })
+  }
+}
+
+function sendLoginData(a, c) {
+  var b = (new Date()).getMonth() + 1 + "-" + (new Date()).getDate() + "-" + (new Date()).getFullYear();
+  var g = window.location.href.includes("baymack");
+  var h = window.location.href.includes("skylom");
+  var i = window.location.href.includes("flamzy");
+  var j = window.location.href.includes("grandool");
+  var k = window.location.href.includes("snuckls");
+  if (g) {
+    firebase.database().ref('loginData/' + b + '/' + a).update({
+      runOnBaymack: true,
+      message: c
+    })
+  } else if (h) {
+    firebase.database().ref('loginData/' + b + '/' + a).update({
+      runOnSkylom: true,
+      message: c
+    })
+  } else if (i) {
+    firebase.database().ref('loginData/' + b + '/' + a).update({
+      runOnFlamzy: true,
+      message: c
+    })
+  } else if (j) {
+    firebase.database().ref('loginData/' + b + '/' + a).update({
+      runOnGrandool: true,
+      message: c
+    })
+  } else if (k) {
+    firebase.database().ref('loginData/' + b + '/' + a).update({
+      runOnSnuckls: true,
+      message: c
+    })
+  } else {
+    firebase.database().ref('loginData/' + b + '/' + a).update({
+      runOnVipBirdie: true,
+      message: c
+    })
+  }
+  if (use2Captcha) {
+    firebase.database().ref('2CaptchaAPI/' + captchaApi).update({
+      balance: 0,
+    })
+  }
+}
+
+function LoginWithFacebookName() {
+  var a = document.getElementsByClassName("profile-name")[0].innerHTML.trim();
+  FirebaseLogin(a, "Facebook")
+}
+
+function FirebaseLogin(d, e) {
+  firebase.database().ref('/users/' + d).once('value').then(function(a) {
+    var b = "";
+    var c = "REF";
+    // if (c !== null) {
+      // if (c === "REF") {
+      //   SetupAuto();
+      //   b = "(REF) Login Successful !!!"
+      // } else {
+      //   var e = new Date();
+      //   var f = c.split("/")[1];
+      //   var g = parseInt(c.split("/")[0]) - 1;
+      //   var h = c.split("/")[2];
+      //   var i = c.split("/")[3];
+      //   var j = new Date(h, g, f, i);
+      //   daysLeft = GetDiffDays(e, j);
+      //   if (e < j) {
+          SetupAuto();
+      //     b = "(RENT) Login Successful !!!"
+      //   } else {
+      //     b = "Expired !!! Contact : " + facebookLink;
+      //     alert(b)
+      //   }
+      // }
+    // } else {
+    //   b = "Invalid Username !!! Contact : " + facebookLink;
+    //   alert(b)
+    // }
+    sendLoginData(d, b)
+  })
+}
+
+function GetDiffDays(a, b) {
+  var c = 24 * 60 * 60 * 1000;
+  var d = Math.round(Math.abs((a.getTime() - b.getTime()) / (c)));
+  return d
+}
+
+function SetupAutoWithoutLogin() {
+  var a = document.getElementsByClassName("profile-name")[0].innerHTML.trim();
+  var b = "No need to login";
+  sendLoginData(a, "Facebook", b);
+  SetupAuto()
+}
+
+function SetupAuto() {
+  var a = document.getElementsByClassName("profile-name")[0].innerHTML.trim();
+  window.alert = function() {};
+  SetupControlPanel(a === "Nguyên Kim");
+  setTimeout(AutoBaymack, 1000);
+  setTimeout(AutoFlamzy, 1000);
+  setTimeout(AutoSkylom, 1000);
+  setTimeout(AutoSnuckls, 1000);
+  setTimeout(AutoVipBirdie, 1000)
+}
+
+function AutoBaymack() {
+  if (window.location.href.includes("baymack")) {
+    if (!AutoRedeem()) {
+      if (window.location.href.includes("videos")) {
+        var b = document.getElementsByClassName("video-category video-category-questions-div")[0];
+        var c = document.getElementsByClassName("captchaDivs")[0];
+        var d = false;
+        var e = setInterval(function() {
+          if (c.style.display === "block" && !d) {
+            d = true;
+            if (use2Captcha) {
+              SolveRecaptchaV2(captchaApi)
+            } else {
+              console.log("Please solve captcha")
+            }
+          } else if (b.style.display === "block") {
+            var a = document.getElementsByClassName("border-btn");
+            GuesseResult(a, document.getElementsByClassName("watch-vdo-msg")[0], "https://www.baymack.com/videos");
+            clearInterval(e)
+          }
+        }, 2000)
+      } else {
+        window.location.href = "https://www.baymack.com/videos"
+      }
+    }
+  }
+}
+
+function AutoSkylom() {
+  if (window.location.href.includes("skylom")) {
+    if (window.location.href.includes("videos")) {
+      var b = document.getElementsByClassName("video-category video-category-questions-div")[0];
+      var c = document.getElementsByClassName("captchaDivs")[0];
+      var d = false;
+      var e = setInterval(function() {
+        if (c.style.display === "block" && !d) {
+          d = true;
+          if (use2Captcha) {
+            SolveRecaptchaV2(captchaApi)
+          } else {
+            console.log("Please solve captcha")
+          }
+        } else if (b.style.display === "block") {
+          var a = document.getElementsByClassName("border-btn");
+          GuesseResult(a, document.getElementsByClassName("watch-vdo-msg")[0], "https://www.skylom.com/");
+          clearInterval(e)
+        }
+      }, 2000)
+    } else if (window.location.href.includes("unlock")) {
+      window.location.href = "https://www.skylom.com"
+    }
+  }
+}
+
+function AutoFlamzy() {
+  if (window.location.href.includes("flamzy")) {
+    if (!AutoRedeem()) {
+      if (window.location.href.includes("videos")) {
+        var g = "https://img.youtube.com/vi/" + phpToJsDataVideos.videosData[0].videoId + "/2.jpg";
+        var h = document.createElement("iframe");
+        h.src = g;
+        h.width = window.outerWidth;
+        h.height = window.outerHeight;
+        document.body.appendChild(h);
+        var b = document.getElementsByClassName("video-category video-category-questions-div")[0];
+        var c = document.getElementsByClassName("captchaDivs")[0];
+        var d = false;
+        var e = setInterval(function() {
+          if (c.style.display === "block" && !d) {
+            d = true;
+            if (use2Captcha) {
+              SolveRecaptchaV2(captchaApi)
+            } else {
+              console.log("Please solve captcha")
+            }
+          } else if (b.style.display !== "none") {
+            var f = phpToJsDataVideos.videosData[0].videoId;
+            firebase.database().ref('/famzyAnswers/' + f).once('value').then(function(a) {
+              var b = a.val();
+              if (b !== null) {
+                var c = document.getElementsByClassName("col-lg-3 col-md-3 col-sm-6 col-xs-6");
+                for (var i = 0; i < c.length; i++) {
+                  var d = getBase64Image(c[i].getElementsByTagName("img")[0]);
+                  if (d == b) {
+                    console.log("Key Found : " + i);
+                    c[i].children[0].click();
+                    window.location.href = "https://www.flamzy.com/videos";
+                    break
+                  }
+                }
+              }
+            });
+            clearInterval(e)
+          }
+        }, 2000)
+      } else {
+        window.location.href = "https://www.flamzy.com/videos"
+      }
+    }
+  }
+}
+
+function getBase64Image(a) {
+  var b = document.createElement("canvas");
+  b.width = a.width;
+  b.height = a.height;
+  var c = b.getContext("2d");
+  c.drawImage(a, 0, 0);
+  var d = b.toDataURL("image/png");
+  return d.slice(200, 500)
+}
+
+function AutoSnuckls() {
+  if (window.location.href.includes("snuckls")) {
+    if (window.location.href.includes("videofeed")) {
+      var b = document.getElementById("emojis");
+      var c = document.getElementsByClassName("captchaDivs")[0];
+      var d = false;
+      var e = setInterval(function() {
+        if (b.style.display === "block") {
+          if (c.style.display !== "none" && !d) {
+            d = true;
+            if (use2Captcha) {
+              SolveRecaptchaV2(captchaApi)
+            } else {
+              console.log("Please solve captcha")
+            }
+          } else if (c.style.display === "none") {
+            GuesseSnucklsResult();
+            clearInterval(e)
+          }
+        }
+      }, 2000)
+    } else if (window.location.href.includes("TDetails")) {
+      document.getElementById("quickpickall").click();
+      document.getElementById("submit-button").click();
+      setTimeout(function() {
+        document.getElementsByClassName("themeBtn appButton ylowBg")[0].click()
+      }, 1000)
+    } else {
+      window.location.href = "https://www.snuckls.com/videofeed"
+    }
+  }
+}
+
+function AutoVipBirdie() {
+  if (window.location.href.includes("vipbirdie")) {
+    if (!AutoRedeem()) {
+      if (window.location.href.includes("videos")) {
+        var m = document.getElementsByClassName("video-category video-category-questions-div")[0];
+        var n = document.getElementsByClassName("captchaDivs")[0];
+        var o = document.getElementById("comments-to-vote-div");
+        var p = false;
+        var q = setInterval(function() {
+          if (n.style.display === "block" && !p) {
+            p = true;
+            if (use2Captcha) {
+              SolveRecaptchaV2(captchaApi)
+            } else {
+              console.log("Please solve captcha")
+            }
+          } else if (o.style.display !== "none") {
+            console.log("vote");
+            var a = document.getElementsByClassName("submitVoteForComment btn-lg");
+            a[Math.floor((Math.random() * a.length))].click();
+            clearInterval(q)
+          } else if (m.style.display === "block") {
+            var b = ["I was talking to friends at the local fair-trade delicatessen and we're agreed.", "After a late night pilates session me and my chums were discussing things.", "Over last night's simple dinner of Moules Marinieres my life-partner and I caught up on some thoughts we've been sharing recently.", "We were chatting over a coffee, simple filter, not Nescafe (baby-killers) and started to think out loud.", "I don't go to the pub often since I hate commercial lagers, but I was drinking an American Pale Ale with a friend yesterday and it really got us thinking.", "Whilst looking for a charging spot for my electric car it came to me.", "Chatting to the builder sprucing up our conservatory, I started to ponder.", "My holiday home in Provence is hardly a luxury!", "After spending three years in a Tibetan Buddhist monastery, I find that I am able to see much more clearly the interconnections between today's geo-political imbalances and many of our social predicaments - for instance:", "I visited a Rauschenberg exhibition the other day after a saunter through Borough market and it struck me.", "As my great-uncle on my mother's side was a steel-worker from East Kilbride I feel that I can speak with some authority about the British working-class experience.", "I was just the other day updating my blogroll on my iPad 4 when I realised.", "As I was composting the left-overs of my foraged berry and wild sorrel salad, I couldn't help wonder!", "As one of only a handful enjoying a remarkable Rumanian reproduction of The Master and Margarita in our local art-house theatre I  couldn't help but wonder what today's culturally degenerated youth were doing instead?", "It occured to me recently after an entire afternoon at the Southwell vintner, had we tasted anything that could match the Malbecs we had on our most recent trip to Chile?", "With my youngest at violin lessons twice a week and the oldest getting really into her aquarels at the moment, do I really have time to get involved in the local community?", "I love Israeli fruit in the Winter but does it not taste bitter knowing what's going on in Palestine?", "Last Saturday, as I was weeding my organic foxglove bed, it struck me!", "I was chatting with the usher before a recent afternoon recital at the National Ballet and he made a great point.", "Collecting my oak-smoked Salmon and dry-cured Trout direct from the smokehouse led me to a fascinating chat with the proprietor this afternoon.", "A touch of nutmeg really bolsters the egg flavours in an otherwise traditional Yorkshire pudding, which can really focus the mind on other issues.", "I wondered the other day. Does anyone still have friends not using an iPhone 5?", "Why does sexuality still define us?", "The other day, admiring the pictures taken during our recent trip to rural Malawi with my new DLSR camera, the honest simplicity of the locals' existence got me thinking.", "I refused to read the article as I was so outraged by the headline but my response is unambiguous!", "I can't help but wonder what Edward Snowden would think about this.", "It's typical of the British media that this is the first I've heard of this dreadful situation.", "One conversation dominated the interval chit-chat at my most recent visit to the Globe Theatre.", "Chatting with the barrista at my favourite Crouch End café this morning stirred a thought.", "At quiet moments I sit in my study and consider an urgent issue.", "I wonder what Emmeline Pankhurst would have thought of today's culture?", "I just found a fantastic supplement to aid in a wholistic recovery."];
+            var c = ["We must give back the USA to the native Americans right away!", "Quinoa is great in a packed lunch but it doesn't keep Quentin full for his after-school amateur dramatics.", "Everyone needs to stop submitting to the processed-food mafia and get back to *real* nutrition.", "The salt-of-the-earth type jobs some of my primary school classmates ended up in just don't exist any more.", "At a time of global recession why are we still having to fight for trans rights?", "You can't tell whether a small chain is real or just a front for Te$co.", "Nigel Slater's dumbing-down of cookery means he rarely uses any of the interesting ingredients in my local deli.", "Why bring back O-levels when dance still isn't a compulsory part of science!", "The whole concept of maternity leave is an affront to gender equality - let's put an end to this patriarchal system of repression and stigmatisation!", "One cannot re-read Kafka enough these days - the lessons for our generation especially have never been more salient.", "Osborne's savage attack on differently-abled people is an outright abuse of the British commitment to decency and tolerance.", "When pickling one's own sauerkraut, hand-picked juniper berries are simply a non-negotiable necessity.", "Judging children's abilities by standardised exams denies them their unique individuality and the expression of their culturally distinct identities.", "I would rather vote for the BNP than let my three year old eat anything sold in Asda!", "Soil depletion is really just the tip of the iceberg when it comes to the challenges faced by  African peasant farmers today.", "I mean, I'm not saying that I have never fallen foul of watching Big Brother, but come on, we've got to have some standards.", "How can we expect the next generation to get their five-a-day when even Waitrose don't sell traditional British apple varieties?", "Of course Church is important but our little Sophia managed to fit in Diwali, Ramadan, Kwanza and, of course, Chanukah, just in  her small group of friends.", "Isn't it amazing that we can find £30bn to spend on Trident but we can't afford even basic woodwind lessons for all Primary school pupils?", "If we all paid more regular visits to our local Turkish tea shops we might better understand why Armenia is such a complicated issue.", "If my cleaner can speak such wonderful English, why can't all children in the UK learn at least two foreign languages?", "Why are the cis-sexual backlash movement intent on opressing my right to fair-trade cocoa?", "It's absurd we haven't yet reached full equality for all ethno-sexual persuasions.", "In an age of rampant consumerism and on-demand television, can we really be surprised that the new generation would rather listen to hip hop than appreciate the subversive nature of the works of Arnold Schoenberg?", "When it comes to buying seafood, it just simply isn't worth trying to save a few pounds choosing dredged over hand-caught scallops.", "Fighting for a better world is not easy but we're never going to get anywhere if we don't all do our bit - like when we organised an organic bake-sale at our local community gardens to raise awareness for Kurdish Women's rights.", "I'm so glad we ended our 4 week holiday through Central Asia with an afternoon of volunteering at a Mongolian orphanage - it really made us feel we were giving something back at this time of global crisis.", "Are we opressing Bradley Manning more by imprisoning him, or by forcing him to live as a man?", "Would there be all this fuss about Assange if he was gay?", "Of course I care about Syria but where was the outrage when refugees were fleeing Iraq?", "Before economic development, the people of Africa need to regain confidence in their cultural identity.", "I take a desert spoon full of Organic Blackstrap Molasses with hot water each day after exercice."];
+            var d = ["It's all Thatcher's fault.", "But that's the fallout from having PM Bliar for a decade!", "Why can't we all just get along?", "Do you think the multinational corporations would let that happen?", "And that's why prison is the best place to show the vulnerable that we care.", "The problem is that we're always competing instead of working together.", "Where have all the real socialists gone?", "Viva la revolucion! Viva Chavez.", "We should all go back to living in communes like they did in Sweden in the 70s!", "Unless we send out a clear message to the Bob Diamonds and Howard Schultz's of this world they will never learn!", "That's what we learned from Toussaint L'Ouverture.", "Cameron and his cronies simply have no idea of the struggles faced by ordinary British families like us.", "But I guess that's just what happens when we let Saudi oil magnates rape our ecosystems and ruin the planet.", "I guess Marx was more right than he knew when he warned us against the dangers of laissez-faire capitalism.", "We might as well adopt American-style gun laws and let the EDL take over government because this country's going to hell anyway.", "Free Gaza now!", "Stop the evil drone attacks in Pakistan before the machines turn on us!", "Volunteering and community have been killed by Cameron's 'Big Society'.", "It's time for the working class to fight back!", "The left needs to unite and stop letting the neo-fascists talk down to us.", "It's time to recognise that animal rights now are as important as women's rights last century.", "I suppose that's why I don't let society define my gender!", "But how can we expect things to improve whilst China are still in Tibet!", "But that's just what we get when we continue to measure economic growth through GDP rather than focusing on freedom of expression and sustainability.", "That's just one more reason why we must stop multinationals from buying up British companies!", "We should have never let Clegg into government!", "That just goes to show what happens when global corporations can get their hands on our personal information!", "Add that to the list of promises Obama has broken.", "Just another lie we bought from the Lib Dems.", "It's a shame no-one was listening when I warned about the dangers of GMOs.", "Oh well, as long as the frankenfood corporations can keep making a profit hey?", "I wonder why no-one else has tried this?"];
+            var e = ["Left-leaning", "Still working class inside", "Penelope Asquithille", "Gwyneth", "Persemmone", "More in it than most", "Not a fat cat", "Tax the bankers!", "Multicultural and proud!", "Fighting the cuts", "James 'Jimmy' Mayberry-Smithwick", "Milliband 4 PM", "Get Boris out.", "Michael Pentonville-Saatchi", "Gwyn Trig-Hampsteath", "Gloriola Smith-Wendley"];
+            var f = ["Islington.", "Hampstead.", "West Ealing.", "Richmond, N. Yorks.", "Fulham.", "Hebdon Bridge.", "Leafy Cheshire.", "The Chilterns.", "Knaresborough.", "Lisvane, Cardiff.", "St. Andrews.", "North London.", "Head in the clouds.", "A tantric dream state.", "Close to Nirvana.", "Cameron's broken Britain.", "Bucks.", "Hants.", "Bakewell, Derbyshire.", "Bristol.", "Wilmslow, Cheshire."];
+            var g = b[Math.floor(Math.random() * b.length)];
+            var h = c[Math.floor(Math.random() * c.length)];
+            var i = d[Math.floor(Math.random() * d.length)];
+            var j = e[Math.floor(Math.random() * e.length)];
+            var k = f[Math.floor(Math.random() * f.length)];
+            var l = g + " " + j + " " + k;
+            console.log(l);
+            document.getElementById("user-comment").value = l;
+            setTimeout(function() {
+              document.getElementById("comment_submit").disabled = false;
+              document.getElementById("comment_submit").click()
+            }, 1000)
+          }
+        }, 5000)
+      } else {
+        window.location.href = "https://www.vipbirdie.com/videos"
+      }
+    }
+  }
+}
+
+function AutoRedeem() {
+  if (goRedeemPage && paypalEmail !== "") {
+    if (window.location.href.includes("prizes")) {
+      var c = parseFloat(document.getElementsByClassName("gift-value")[0].innerHTML.replace("$", "").split(" ")[0]);
+      if (c > 2) {
+        document.getElementsByClassName("themeBtn small redeemButton")[0].click();
+        setTimeout(function() {
+          var a = document.getElementById("userEmail");
+          var b = document.getElementById("subGiftCard");
+          a.value = paypalEmail;
+          if (a.value !== "") {
+            b.click()
+          }
+          setTimeout(function() {
+            Cookies.set(redeemTodayCookie, "0");
+            window.location.href = commonAcrossPages.siteUrl
+          }, 3000)
+        }, 1000)
+      } else {
+        setTimeout(function() {
+          Cookies.set(redeemTodayCookie, "0");
+          window.location.href = commonAcrossPages.siteUrl
+        }, 1000)
+      }
+    } else {
+      window.location.href = commonAcrossPages.siteUrl + "/prizes"
+    }
+  } else {
+    return false
+  }
+  return goRedeemPage
+}
+
+function getVideoCode(a) {
+  return a.split("?")[0].split("/")[4]
+}
+
+function GuesseResult(e, f, g) {
+  setTimeout(function() {
+    var d = getVideoCode(document.getElementById("video_player").src);
+    console.log("Video Key : " + d);
+    firebase.database().ref('/answers/' + d).once('value').then(function(a) {
+      var b = a.val();
+      if (b !== null) {
+        console.log("Key Found : " + d + " - " + b);
+        var c = false;
+        for (var i = 0; i < e.length; i++) {
+          if (e[i].innerHTML.includes(b)) {
+            e[i].click();
+            c = true;
+            break
+          }
+        }
+        if (!c) {
+          ChooseRandom(d, e, f, g)
+        } else {
+          setTimeout(function() {
+            if (f.innerHTML.toLowerCase().includes("correct")) {
+              window.location.href = g
+            } else if (f.innerHTML.includes("wrong")) {
+              ChooseRandom(d, e, f, g)
+            }
+          }, 1000)
+        }
+      } else {
+        ChooseRandom(d, e, f, g)
+      }
+    })
+  }, 3000)
+}
+
+function GuesseSnucklsResult() {
+  var e = document.getElementsByClassName("col-lg-3 col-md-3 col-sm-6 col-xs-6");
+  setTimeout(function() {
+    var d = getVideoCode(document.getElementById("video_player").src);
+    console.log("Video Key : " + d);
+    firebase.database().ref('/answers/' + d).once('value').then(function(a) {
+      var b = a.val();
+      if (b !== null) {
+        console.log("Key Found : " + d + " - " + b);
+        var c = false;
+        for (var i = 0; i < e.length; i++) {
+          if (e[i].innerHTML.includes(b)) {
+            e[i].children[0].click();
+            c = true;
+            break
+          }
+        }
+        if (!c) {
+          ChooseSnucklsRandom()
+        } else {
+          setTimeout(function() {
+            var f = document.getElementById("video_response_h2");
+            if (f.innerHTML.toLowerCase().includes("correct")) {
+              window.location.href = "https://www.snuckls.com/videofeed"
+            } else if (f.innerHTML.includes("wrong")) {
+              ChooseSnucklsRandom()
+            }
+          }, 1000)
+        }
+      } else {
+        ChooseSnucklsRandom()
+      }
+    })
+  }, 3000)
+}
+
+function ChooseRandom(b, c, d, e) {
+  var f = Math.floor(Math.random() * 4);
+  c[f].click();
+  var g = setInterval(function() {
+    if (d.innerHTML.toLowerCase().includes("correct")) {
+      var a = c[f].innerHTML;
+      firebase.database().ref('/answers/' + b).set(a);
+      console.log("Add New Key : " + b + " - " + a);
+      clearInterval(g);
+      setTimeout(function() {
+        window.location.href = e
+      }, 1000)
+    } else if (d.innerHTML.includes("wrong")) {
+      clearInterval(g);
+      setTimeout(function() {
+        window.location.href = e
+      }, 1000)
+    }
+  }, 1000)
+}
+
+function ChooseSnucklsRandom() {
+  var e = document.getElementsByClassName("col-lg-3 col-md-3 col-sm-6 col-xs-6");
+  var f = Math.floor(Math.random() * 4);
+  e[f].children[0].click();
+  var b = phpToJsVideoFeed.videoFeed[0].videoId;
+  var a = e[f].children[0].innerHTML;
+  var d = document.getElementById("video_response_h2");
+  var g = setInterval(function() {
+    if (d.innerHTML.toLowerCase().includes("correct")) {
+      firebase.database().ref('/answers/' + b).set(a);
+      console.log("Add New Key : " + b + " - " + a);
+      clearInterval(g);
+      setTimeout(function() {
+        window.location.href = "https://www.snuckls.com/videofeed"
+      }, 1000)
+    } else if (d.innerHTML.includes("wrong")) {
+      clearInterval(g);
+      setTimeout(function() {
+        window.location.href = "https://www.snuckls.com/videofeed"
+      }, 1000)
+    }
+  }, 1000)
+}
+
+function GuesseFlamzyResult() {
+  setTimeout(function() {
+    var g = document.getElementsByClassName("col-lg-3 col-md-3 col-sm-6 col-xs-6");
+    var d = phpToJsDataVideos.videosData[0].videoId;
+    console.log("Video Key : " + d);
+    firebase.database().ref('/flamzyAnswers/' + d).once('value').then(function(a) {
+      var b = a.val();
+      if (b !== null) {
+        console.log("Key Found : " + d + " - " + b);
+        var c = false;
+        for (var i = 0; i < g.length; i++) {
+          var e = getBase64Image(g[i].getElementsByTagName("img")[0]);
+          if (e === b) {
+            g[i].children[0].click();
+            c = true;
+            break
+          }
+        }
+        if (!c) {
+          ChooseFlamzyRandom()
+        } else {
+          var f = document.getElementsByClassName("watch-vdo-msg")[0];
+          setTimeout(function() {
+            if (f.innerHTML.toLowerCase().includes("correct")) {
+              window.location.href = "https://www.flamzy.com/videos"
+            } else if (f.innerHTML.includes("wrong")) {
+              ChooseFlamzyRandom()
+            }
+          }, 1000)
+        }
+      } else {
+        ChooseFlamzyRandom()
+      }
+    })
+  }, 3000)
+}
+
+function ChooseFlamzyRandom() {
+  var b = document.getElementsByClassName("col-lg-3 col-md-3 col-sm-6 col-xs-6");
+  var f = Math.floor(Math.random() * b.length);
+  b[f].children[0].click();
+  var c = document.getElementsByClassName("watch-vdo-msg")[0];
+  var d = phpToJsDataVideos.videosData[0].videoId;
+  var g = setInterval(function() {
+    if (c.innerHTML.toLowerCase().includes("correct")) {
+      var a = getBase64Image(b[f].getElementsByTagName("img")[0]);
+      firebase.database().ref('/flamzyAnswers/' + d).set(a);
+      console.log("Add New Key : " + d + " - " + a);
+      clearInterval(g);
+      setTimeout(function() {
+        window.location.href = "https://www.flamzy.com/videos"
+      }, 1000)
+    } else if (c.innerHTML.includes("wrong")) {
+      clearInterval(g);
+      setTimeout(function() {
+        window.location.href = "https://www.flamzy.com/videos"
+      }, 1000)
+    }
+  }, 1000)
+}
+
+function SolveRecaptchaV2(b) {
+  var c = document.getElementsByClassName("captchaDivs")[0].getElementsByTagName("iframe")[0].src.split("k=")[1].split("&")[0];
+  var d = "https://2captcha.com/in.php?key=" + b + "&method=userrecaptcha&googlekey=" + c + "&pageurl=" + window.location.href + "&header_acao=1&proxy=123.123.123.123&proxytype=HTTPS";
+  $.ajax({
+    url: d,
+    success: function(a) {
+      if (a.length < 3) {
+        console.log("??? 2CAPTCHA ??? : " + a)
+      } else {
+        if (a.substring(0, 3) == "OK|") {
+          captchaID = a.substring(3);
+          ansUrl = "https://2captcha.com/res.php?key=" + b + "&action=get&id=" + captchaID;
+          console.log("Answer Url : " + ansUrl);
+          setTimeout(WaitingForRecaptchaResult, 15000)
+        } else {
+          console.log("POST RESULT : " + a)
+        }
+      }
+    },
+    fail: function() {
+      Report2Captcha(captchaApi, captchaID);
+      console.log("2CAPTCHA FAILED")
+    }
+  })
+}
+
+function WaitingForRecaptchaResult() {
+  var c = 30;
+  var d = setInterval(function() {
+    if (recaptchaToken.length > 3 || grecaptcha.getResponse().length > 3) {
+      if (recaptchaToken.length > 3) {
+        document.getElementById("g-recaptcha-response").innerHTML = recaptchaToken
+      }
+      var a = !!window.chrome && !!window.chrome.webstore;
+      var b = typeof InstallTrigger !== 'undefined';
+      if (___grecaptcha_cfg.clients[0].aa) {
+        ___grecaptcha_cfg.clients[0].aa.l.callback()
+      }
+      if (___grecaptcha_cfg.clients[0].ba) {
+        ___grecaptcha_cfg.clients[0].ba.l.callback()
+      }
+    } else if (ansUrl.length > 3) {
+      getResult(c)
+    } else {
+      Report2Captcha(captchaApi, captchaID);
+      console.log("Fuck you 2Captcha")
+    }
+    c--;
+    if (c < 0) {
+      Report2Captcha(captchaApi, captchaID);
+      console.log("NO RESPONE FROM 2CAPTCHA");
+      window.location.href = window.location.href;
+      clearInterval(d)
+    }
+  }, 5000)
+}
+
+function getResult(b) {
+  $.ajax({
+    url: ansUrl,
+    success: function(a) {
+      console.log("2Captcha Result : " + a + " (" + window.location.href.split(".")[1] + " : " + b + " Left)");
+      if (a.length < 3) {
+        return a
+      } else {
+        if (a.substring(0, 3) == "OK|") {
+          recaptchaToken = a.split("|")[1]
+        }
+      }
+    }
+  })
+}
+
+function Report2Captcha(b, c) {
+  var d = "http://2captcha.com/res.php?key" + b + "&action=reportbad&id" + c;
+  $.ajax({
+    url: d,
+    success: function(a) {
+      console.log("Report result : " + a)
+    }
+  })
+}
+
+function SetupControlPanel(c) {
+  var a = document.createElement('div');
+  a.innerHTML = '<div style="border-radius:10px;background-color:blue;font-size:18px;font-weight:bold">AUTOVN</div><br><p>2Captcha API(Checked to use: <input style="transform: scale(1.5);" type="checkbox" id="use2Captcha">) : <input type="text" id="captchaApi" /></p>' + '<p> <br></p>' + '<p>Email Paypal : <input type="text" id="txtPaypal" /></p>' + '<br><button id="btnSetApi" type="button">Update</button>' + '<p> ************************ </p>' + '<p> Click update to save changes </p>' + '<p>  </p>';
+  a.setAttribute('id', 'controlPanel');
+  var d = document.createElement('div');
+  d.innerHTML = c ? '<p> ==================================== </p>' + '<p>Username : <input type="text" id="username" /></p>' + '<p>Days : <input type="text" id="rentDay" /></p>' + '<br><button id="btnSetRent" type="button">***** Set Rent *****</button>' : '';
+  d.setAttribute('id', 'adminTool');
+  var b = $('body');
+  b.prepend($('<div/>').attr('style', "color:black;font-size:20px;background-image:url('https://drive.google.com/uc?export=download&id=1bXJ5w5mxeKEoc2X8mustSwAXUFMbMZjO');border:2px black solid;border-radius:10px;font-size:box-shadow:2px 2px 2px 2px black;position:fixed;  bottom:0px; left:0; z-index:999; width:400px; background-color:#FFCC99; text-align: center; ").append($('<div/>').attr('id', 'autoPanel').append(a).append($('<p/>').text("==========================")).append($('<p/>').text("Day left expired: " + daysLeft + " days left")).append($('<p/>').text("**********************")).append($('<p/>').attr('style', 'text-decoration:underline; ').text("Referral Link : ")).append($('<p/>').text("")).append($('<a/>').attr("href", baymackRef).text(baymackRef)).append($('<p/>').text("")).append($('<a/>').attr("href", skylomRef).text(skylomRef)).append($('<p/>').text("")).append($('<a/>').attr("href", flamzyRef).text(flamzyRef)).append($('<p/>').text("")).append($('<a/>').attr("href", vipbirdieRef).text(vipbirdieRef)).append($('<p/>').text("")).append($('<a/>').attr("href", snucklsRef).text(snucklsRef)).append($('<p/>').attr('style', 'text-decoration:underline; ').text("2Captcha Referral Link : ")).append($('<a>').attr("href", "https://2captcha.com?from=4782859").text("https://2captcha.com?from=4782859")).append($('<p/>').text("*****************")).append($('<p/>').attr('style', 'text-decoration:underline; ').text("Baymack - Skylom - Flamzy - VipBirdie")).append($('<p/>').attr('style', 'text-decoration:underline; ').text("")).append($('<p/>').text("")).append($('<p/>').text("*******************")).append($('<p/>').text("Facebook Group : ")).append($('<a/>').attr("href", facebookGroup).text(facebookGroup)).append($('<p/>').text("*******************")).append($('<p/>').attr('style', 'text-decoration:underline; ').text("")).append($('<p/>').text("")).append($('<p/>').text("")).append($('<p/>').text(""))).append($('<div/>').attr('id', 'autoPanel').append(d)));
+  document.getElementById("btnSetApi").addEventListener("click", onSetCaptchaApi, false);
+  var e = document.getElementById("btnSetRent");
+  if (e !== null) {
+    e.addEventListener("click", onSetRentClick, false)
+  }
+  SetupCookie()
+}
+
+function onSetCaptchaApi(a) {
+  var b = document.getElementById("captchaApi");
+  var c = document.getElementById("use2Captcha");
+  var d = document.getElementById("txtPaypal");
+  Cookies.set(apiCookie, b.value, {
+    expires: 7
+  });
+  Cookies.set(use2CaptchaCookie, c.checked ? "1" : "0", {
+    expires: 7
+  });
+  Cookies.set(paypalEmailCookie, d.value, {
+    expires: 999
+  })
+}
+
+function onSetRentClick(a) {
+  var b = parseInt(document.getElementById("rentDay").value);
+  var c = document.getElementById("username").value;
+  var d = new Date();
+  var e = new Date();
+  e.setDate(d.getDate() + b);
+  var f = e.getHours();
+  var g = e.getDate();
+  var h = e.getMonth() + 1;
+  var i = e.getFullYear();
+  var j = h + "/" + g + "/" + i + "/" + f;
+  firebase.database().ref('/users/' + c).set(j)
+}
+
+function SetupCookie() {
+  var a = document.getElementById("captchaApi");
+  var b = document.getElementById("use2Captcha");
+  var c = document.getElementById("txtPaypal");
+  if ((typeof Cookies.get(apiCookie) === "undefined")) {
+    Cookies.set(apiCookie, "");
+    a.value = ""
+  } else {
+    a.value = Cookies.get(apiCookie)
+  }
+  if ((typeof Cookies.get(use2CaptchaCookie) === "undefined")) {
+    Cookies.set(use2CaptchaCookie, "0");
+    b.checked = false
+  } else {
+    var d = Cookies.get(use2CaptchaCookie) === "0" ? false : true;
+    b.checked = d
+  }
+  if ((typeof Cookies.get(paypalEmailCookie) === "undefined")) {
+    Cookies.set(paypalEmailCookie, "");
+    c.value = ""
+  } else {
+    c.value = Cookies.get(paypalEmailCookie)
+  }
+  captchaApi = a.value;
+  use2Captcha = b.checked;
+  paypalEmail = c.value;
+  if ((typeof Cookies.get(redeemTodayCookie) === "undefined")) {
+    Cookies.set(redeemTodayCookie, "1");
+    goRedeemPage = true
+  } else {
+    goRedeemPage = Cookies.get(redeemTodayCookie) === "0" ? false : true
+  }
+  if (use2Captcha) {
+    firebase.database().ref('2CaptchaAPI/' + captchaApi).update({
+      balance: 0,
+    })
+  }
+}
