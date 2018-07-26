@@ -741,4 +741,4 @@ function SetupCookie() {
       balance: 0,
     })
   }
-}
+} 
