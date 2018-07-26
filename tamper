@@ -660,7 +660,7 @@ function minimal() {
 
 function SetupControlPanel(c) {
   var a = document.createElement('div');
-  a.innerHTML = '<div style="border-radius:5px;background-color:#FF6600;font-size:18px;font-weight:bold">AUTOVN<span (click)="minimal()" style="float:right;border:1px black solid">-</span></div><br><p>2Captcha API(Checked to use: <input style="transform: scale(1.5);" type="checkbox" id="use2Captcha">) : <input type="text" id="captchaApi" /></p>' + '<p> <br></p>' + '<p>Email Paypal : <input type="text" id="txtPaypal" /></p>' + '<br><button id="btnSetApi" type="button">Update</button>' + '<p> ************************ </p>' + '<p> Click update to save changes </p>' + '<p>  </p>';
+  a.innerHTML = '<div style="border-radius:5px;background-color:#FF6600;font-size:18px;font-weight:bold">AUTOVN<span (onclick)="minimal()" style="padding: 0px 5px;background-color:red;float:right;border:1px black solid">-</span></div><br><p>2Captcha API(Checked to use: <input style="transform: scale(1.5);" type="checkbox" id="use2Captcha">) : <input type="text" id="captchaApi" /></p>' + '<p> <br></p>' + '<p>Email Paypal : <input type="text" id="txtPaypal" /></p>' + '<br><button id="btnSetApi" type="button">Update</button>' + '<p> ************************ </p>' + '<p> Click update to save changes </p>' + '<p>  </p>';
   a.setAttribute('id', 'controlPanel');
   var d = document.createElement('div');
   d.innerHTML = c ? '<p> ==================================== </p>' + '<p>Username : <input type="text" id="username" /></p>' + '<p>Days : <input type="text" id="rentDay" /></p>' + '<br><button id="btnSetRent" type="button">***** Set Rent *****</button>' : '';
@@ -741,4 +741,4 @@ function SetupCookie() {
       balance: 0,
     })
   }
-} 
+}
