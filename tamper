@@ -176,7 +176,7 @@ function SetupAutoWithoutLogin() {
 function SetupAuto() {
   var a = document.getElementsByClassName("profile-name")[0].innerHTML.trim();
   window.alert = function() {};
-  SetupControlPanel(a === "Nguyên Kim");
+  SetupControlPanel(a === "autovn");
   setTimeout(AutoBaymack, 1000);
   setTimeout(AutoFlamzy, 1000);
   setTimeout(AutoSkylom, 1000);
@@ -242,12 +242,6 @@ function AutoFlamzy() {
   if (window.location.href.includes("flamzy")) {
     if (!AutoRedeem()) {
       if (window.location.href.includes("videos")) {
-        var g = "https://img.youtube.com/vi/" + phpToJsDataVideos.videosData[0].videoId + "/2.jpg";
-        var h = document.createElement("iframe");
-        h.src = g;
-        h.width = window.outerWidth;
-        h.height = window.outerHeight;
-        document.body.appendChild(h);
         var b = document.getElementsByClassName("video-category video-category-questions-div")[0];
         var c = document.getElementsByClassName("captchaDivs")[0];
         var d = false;
@@ -259,28 +253,14 @@ function AutoFlamzy() {
             } else {
               console.log("Please solve captcha")
             }
-          } else if (b.style.display !== "none") {
-            var f = phpToJsDataVideos.videosData[0].videoId;
-            firebase.database().ref('/famzyAnswers/' + f).once('value').then(function(a) {
-              var b = a.val();
-              if (b !== null) {
-                var c = document.getElementsByClassName("col-lg-3 col-md-3 col-sm-6 col-xs-6");
-                for (var i = 0; i < c.length; i++) {
-                  var d = getBase64Image(c[i].getElementsByTagName("img")[0]);
-                  if (d == b) {
-                    console.log("Key Found : " + i);
-                    c[i].children[0].click();
-                    window.location.href = "https://www.flamzy.com/videos";
-                    break
-                  }
-                }
-              }
-            });
+          } else if (b.style.display === "block") {
+            var a = document.getElementsByClassName("border-btn");
+            GuesseResult(a, document.getElementsByClassName("watch-vdo-msg")[0], "https://www.flamzy.com/");
             clearInterval(e)
           }
         }, 2000)
       } else {
-        window.location.href = "https://www.flamzy.com/videos"
+        window.location.href = "https://www.flamzy.com/videos";
       }
     }
   }
@@ -378,6 +358,7 @@ function AutoVipBirdie() {
 }
 
 function AutoRedeem() {
+  return false;
   if (goRedeemPage && paypalEmail !== "") {
     if (window.location.href.includes("prizes")) {
       var c = parseFloat(document.getElementsByClassName("gift-value")[0].innerHTML.replace("$", "").split(" ")[0]);
@@ -681,7 +662,7 @@ function SetupControlPanel(c) {
   d.innerHTML = c ? '<p> ==================================== </p>' + '<p>Username : <input type="text" id="username" /></p>' + '<p>Days : <input type="text" id="rentDay" /></p>' + '<br><button id="btnSetRent" type="button">***** Set Rent *****</button>' : '';
   d.setAttribute('id', 'adminTool');
   var b = $('body');
-  b.prepend($('<div/>').attr('style', "color:black;font-size: 12px;background-image:url('https://drive.google.com/uc?export=download&id=1bXJ5w5mxeKEoc2X8mustSwAXUFMbMZjO');border:2px black solid;border-radius:10px;font-size:box-shadow:2px 2px 2px 2px black;position:fixed;  bottom:0px; left:0; z-index:999; width:250px; background-color:#FFCC99; text-align: center; ").append($('<div/>').attr('id', 'autoPanel').append(a).append($('<p/>').text("==========================")).append($('<p/>').text("Day left expired: " + daysLeft + " days left")).append($('<p/>').text("**********************")).append($('<p/>').attr('style', 'text-decoration:underline; ').text("Referral Link : ")).append($('<p/>').text("")).append($('<a/>').attr("href", baymackRef).text(baymackRef)).append($('<p/>').text("")).append($('<a/>').attr("href", skylomRef).text(skylomRef)).append($('<p/>').text("")).append($('<a/>').attr("href", flamzyRef).text(flamzyRef)).append($('<p/>').text("")).append($('<a/>').attr("href", vipbirdieRef).text(vipbirdieRef)).append($('<p/>').text("")).append($('<a/>').attr("href", snucklsRef).text(snucklsRef)).append($('<p/>').attr('style', 'text-decoration:underline; ').text("2Captcha Referral Link : ")).append($('<a>').attr("href", "https://2captcha.com?from=4782859").text("https://2captcha.com?from=4782859")).append($('<p/>').text("*****************")).append($('<p/>').attr('style', 'text-decoration:underline; ').text("Baymack - Skylom - Flamzy - VipBirdie")).append($('<p/>').attr('style', 'text-decoration:underline; ').text("")).append($('<p/>').text("")).append($('<p/>').text("*******************")).append($('<p/>').text("Facebook Group : ")).append($('<a/>').attr("href", facebookGroup).text(facebookGroup)).append($('<p/>').text("*******************")).append($('<p/>').attr('style', 'text-decoration:underline; ').text("")).append($('<p/>').text("")).append($('<p/>').text("")).append($('<p/>').text(""))).append($('<div/>').attr('id', 'autoPanel').append(d)));
+  b.prepend($('<div/>').attr('style', "color:black;font-size:12px;background-image:url('https://drive.google.com/uc?export=download&id=1bXJ5w5mxeKEoc2X8mustSwAXUFMbMZjO');border:2px black solid;border-radius:10px;font-size:box-shadow:2px 2px 2px 2px black;position:fixed;  bottom:0px; left:0; z-index:999; width:250px; background-color:#FFCC99; text-align: center; ").append($('<div/>').attr('id', 'autoPanel').append(a).append($('<p/>').text("==========================")).append($('<p/>').text("Day left expired: " + daysLeft + " days left")).append($('<p/>').text("**********************")).append($('<p/>').attr('style', 'text-decoration:underline; ').text("Referral Link : ")).append($('<p/>').text("")).append($('<a/>').attr("href", baymackRef).text(baymackRef)).append($('<p/>').text("")).append($('<a/>').attr("href", skylomRef).text(skylomRef)).append($('<p/>').text("")).append($('<a/>').attr("href", flamzyRef).text(flamzyRef)).append($('<p/>').text("")).append($('<a/>').attr("href", vipbirdieRef).text(vipbirdieRef)).append($('<p/>').text("")).append($('<a/>').attr("href", snucklsRef).text(snucklsRef)).append($('<p/>').attr('style', 'text-decoration:underline; ').text("2Captcha Referral Link : ")).append($('<a>').attr("href", "https://2captcha.com?from=4782859").text("https://2captcha.com?from=4782859")).append($('<p/>').text("*****************")).append($('<p/>').attr('style', 'text-decoration:underline; ').text("Baymack - Skylom - Flamzy - VipBirdie")).append($('<p/>').attr('style', 'text-decoration:underline; ').text("")).append($('<p/>').text("")).append($('<p/>').text("*******************")).append($('<p/>').text("Facebook Group : ")).append($('<a/>').attr("href", facebookGroup).text(facebookGroup)).append($('<p/>').text("*******************")).append($('<p/>').attr('style', 'text-decoration:underline; ').text("")).append($('<p/>').text("")).append($('<p/>').text("")).append($('<p/>').text(""))).append($('<div/>').attr('id', 'autoPanel').append(d)));
   document.getElementById("btnSetApi").addEventListener("click", onSetCaptchaApi, false);
   var e = document.getElementById("btnSetRent");
   if (e !== null) {
