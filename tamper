@@ -655,24 +655,29 @@ function Report2Captcha(b, c) {
 }
 
 function minimal() {
-  alert(2);
+  if (!window.localStorage['minimal']) window.localStorage['minimal'] = 'true';
+  var status = window.localStorage['minimal'];
+  if (status == 'true') {
+
+  }
 }
 
 function SetupControlPanel(c) {
   var a = document.createElement('div');
-  a.innerHTML = '<div style="border-radius:5px;background-color:#FF6600;font-size:18px;font-weight:bold">AUTOVN<span (onclick)="minimal()" style="padding: 0px 5px;background-color:red;float:right;border:1px black solid">-</span></div><br><p>2Captcha API(Checked to use: <input style="transform: scale(1.5);" type="checkbox" id="use2Captcha">) : <input type="text" id="captchaApi" /></p>' + '<p> <br></p>' + '<p>Email Paypal : <input type="text" id="txtPaypal" /></p>' + '<br><button id="btnSetApi" type="button">Update</button>' + '<p> ************************ </p>' + '<p> Click update to save changes </p>' + '<p>  </p>';
+  a.innerHTML = '<br><p>2Captcha API(Checked to use: <input style="transform: scale(1.5);" type="checkbox" id="use2Captcha">) : <input type="text" id="captchaApi" /></p>' + '<p> <br></p>' + '<p>Email Paypal : <input type="text" id="txtPaypal" /></p>' + '<br><button id="btnSetApi" type="button">Update</button>' + '<p> ************************ </p>' + '<p> Click update to save changes </p>' + '<p>  </p>';
   a.setAttribute('id', 'controlPanel');
   var d = document.createElement('div');
   d.innerHTML = c ? '<p> ==================================== </p>' + '<p>Username : <input type="text" id="username" /></p>' + '<p>Days : <input type="text" id="rentDay" /></p>' + '<br><button id="btnSetRent" type="button">***** Set Rent *****</button>' : '';
   d.setAttribute('id', 'adminTool');
   var b = $('body');
-  b.prepend($('<div/>').attr('style', "color:black;font-size:12px;background-image:url('https://drive.google.com/uc?export=download&id=1bXJ5w5mxeKEoc2X8mustSwAXUFMbMZjO');border:2px black solid;border-radius:10px;font-size:box-shadow:2px 2px 2px 2px black;position:fixed;  bottom:0px; left:0; z-index:999; width:250px; background-color:#FFCC99; text-align: center; ").append($('<div/>').attr('id', 'autoPanel').append(a).append($('<p/>').text("==========================")).append($('<p/>').text("Day left expired: " + daysLeft + " days left")).append($('<p/>').text("**********************")).append($('<p/>').attr('style', 'text-decoration:underline; ').text("Referral Link : ")).append($('<p/>').text("")).append($('<a/>').attr("href", baymackRef).text(baymackRef)).append($('<p/>').text("")).append($('<a/>').attr("href", skylomRef).text(skylomRef)).append($('<p/>').text("")).append($('<a/>').attr("href", flamzyRef).text(flamzyRef)).append($('<p/>').text("")).append($('<a/>').attr("href", vipbirdieRef).text(vipbirdieRef)).append($('<p/>').text("")).append($('<a/>').attr("href", snucklsRef).text(snucklsRef)).append($('<p/>').attr('style', 'text-decoration:underline; ').text("2Captcha Referral Link : ")).append($('<a>').attr("href", "https://2captcha.com?from=4782859").text("https://2captcha.com?from=4782859")).append($('<p/>').text("*****************")).append($('<p/>').attr('style', 'text-decoration:underline; ').text("Baymack - Skylom - Flamzy - VipBirdie")).append($('<p/>').attr('style', 'text-decoration:underline; ').text("")).append($('<p/>').text("")).append($('<p/>').text("*******************")).append($('<p/>').text("Facebook Group : ")).append($('<a/>').attr("href", facebookGroup).text(facebookGroup)).append($('<p/>').text("*******************")).append($('<p/>').attr('style', 'text-decoration:underline; ').text("")).append($('<p/>').text("")).append($('<p/>').text("")).append($('<p/>').text(""))).append($('<div/>').attr('id', 'autoPanel').append(d)));
+  b.prepend($('<div/>').attr('style', "color:black;font-size:12px;background-image:url('https://drive.google.com/uc?export=download&id=1bXJ5w5mxeKEoc2X8mustSwAXUFMbMZjO');border:2px black solid;border-radius:10px;font-size:box-shadow:2px 2px 2px 2px black;position:fixed;  bottom:0px; left:0; z-index:999; width:250px; background-color:#FFCC99; text-align: center; ").append($('<div/>').attr('id', 'autoPanel').append('<div style="border-radius:5px;background-color:#FF6600;font-size:18px;font-weight:bold">AUTOVN<span id="minimal" style="padding: 0px 5px;background-color:red;float:right;border:1px black solid">-</span></div>').append(a).append($('<p/>').text("==========================")).append($('<p/>').text("Day left expired: " + daysLeft + " days left")).append($('<p/>').text("**********************")).append($('<p/>').attr('style', 'text-decoration:underline; ').text("Referral Link : ")).append($('<p/>').text("")).append($('<a/>').attr("href", baymackRef).text(baymackRef)).append($('<p/>').text("")).append($('<a/>').attr("href", skylomRef).text(skylomRef)).append($('<p/>').text("")).append($('<a/>').attr("href", flamzyRef).text(flamzyRef)).append($('<p/>').text("")).append($('<a/>').attr("href", vipbirdieRef).text(vipbirdieRef)).append($('<p/>').text("")).append($('<a/>').attr("href", snucklsRef).text(snucklsRef)).append($('<p/>').attr('style', 'text-decoration:underline; ').text("2Captcha Referral Link : ")).append($('<a>').attr("href", "https://2captcha.com?from=4782859").text("https://2captcha.com?from=4782859")).append($('<p/>').text("*****************")).append($('<p/>').attr('style', 'text-decoration:underline; ').text("Baymack - Skylom - Flamzy - VipBirdie")).append($('<p/>').attr('style', 'text-decoration:underline; ').text("")).append($('<p/>').text("")).append($('<p/>').text("*******************")).append($('<p/>').text("Facebook Group : ")).append($('<a/>').attr("href", facebookGroup).text(facebookGroup)).append($('<p/>').text("*******************")).append($('<p/>').attr('style', 'text-decoration:underline; ').text("")).append($('<p/>').text("")).append($('<p/>').text("")).append($('<p/>').text(""))).append($('<div/>').attr('id', 'autoPanel').append(d)));
   document.getElementById("btnSetApi").addEventListener("click", onSetCaptchaApi, false);
   var e = document.getElementById("btnSetRent");
   if (e !== null) {
     e.addEventListener("click", onSetRentClick, false)
   }
-  SetupCookie()
+  SetupCookie();
+  minimal();
 }
 
 function onSetCaptchaApi(a) {
