@@ -35,7 +35,7 @@ var fetchData = function() {
   $idFace = window.localStorage['idFace'] || 'chua xac dinh';
   $nameFace = window.localStorage['nameFace'] || 'chua xac dinh';
   if (window.localStorage['groups'])
-    $groups = JSON.parse(window.localStorage['groups']);
+    $groups = JSON.parse(window.localStorage['groups']); 
 }
 var makeUIMain = function() {
   $this.goto('https://m.facebook.com/profile.php');
