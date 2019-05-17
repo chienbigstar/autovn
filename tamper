@@ -212,12 +212,12 @@ function SetupAuto() {
   var box = document.querySelector('.video-box');
   if(box) $(box).attr('style', 'width:100px;height:100px');
   setTimeout(AutoBaymack, 1000);
-  setTimeout(AutoFlamzy, 1000);
+  // setTimeout(AutoFlamzy, 1000);
   setTimeout(AutoSkylom, 1000);
   setTimeout(AutoSnuckls, 1000);
-  setTimeout(AutoVipBirdie, 1000);
-  setTimeout(AutoOutbuck, 1000);
-  setTimeout(AutoSharkday, 1000);
+  // setTimeout(AutoVipBirdie, 1000);
+  // setTimeout(AutoOutbuck, 1000);
+  // setTimeout(AutoSharkday, 1000);
 }
 
 function AutoSharkday() {
