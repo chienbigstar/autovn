@@ -819,15 +819,9 @@ function SetupControlPanel(c) {
   a.innerHTML = '<br>'+
   'AUTOVN Key: <input type="text" id="autovnKey" />'+
   '<p>'+
-  '2Captcha Key: '+'<input style="transform: scale(1.5);" type="checkbox" id="use2Captcha" class="btnapi">'+': <input type="text" id="captchaApi" />' + '</p>' +
-   '<p>' + 'AntiCaptcha Key: '+'<input style="transform: scale(1.5);" type="checkbox" id="useAntiCaptcha" class="btnapi">'+': <input type="text" id="antiCaptchaApi" />'+ '</p>' +
-
    '<p>' + 'Shutdown at:' + '<br>' +
    '<input style="transform: scale(1.5);" type="checkbox" id="useAutoShutdownVideo" class="autoShutdown"> <input id="autoShutdownVideo" type="number" min="1" style="width:40px"/> (videos)' +
     '<br><br>' +
-    'Auto bet: ' +
-    '<input id="useAutoBet" type="checkbox" style="transform: scale(1.5);"</input> (sharkday)' + '<br>' +
-
     '<br><button id="btnSetApi" type="button">Update</button>' +
     '<p> Click update to save changes </p>' + '<p>  </p>';
   a.setAttribute('id', 'controlPanel');
