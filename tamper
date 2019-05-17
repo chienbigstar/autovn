@@ -100,7 +100,6 @@ function Initialize() {
     SetupControlPanel(false);
     if (window.location.href.includes("videos")) {
       initDashboard();
-
       setTimeout(function() {
         var currentTime = window.document.querySelector('.video-page-current-duration');
         var currentTimeInt = parseInt(currentTime.innerText);
@@ -209,8 +208,6 @@ function SetupAutoWithoutLogin() {
 }
 
 function SetupAuto() {
-  var box = document.querySelector('.video-box');
-  if(box) $(box).attr('style', 'width:100px;height:100px');
   setTimeout(AutoBaymack, 1000);
   // setTimeout(AutoFlamzy, 1000);
   setTimeout(AutoSkylom, 1000);
@@ -680,8 +677,10 @@ function ChooseFlamzyRandom() {
 }
 
 function SolveRecaptchaV2(b) {
-	if (document.querySelector('#g-recaptcha-response') && document.querySelector('#g-recaptcha-response').value != '') {
-		document.getElementsByClassName("video-category video-category-questions-div")[0].style.display = 'none';
+	var res = document.querySelector('#g-recaptcha-response');
+	if (res && $(res).val() != '') {
+		var captDiv = document.getElementsByClassName("video-category video-category-questions-div")[0];
+		if (captDiv)  captDiv.style.display = 'none';
 	}
 }
 
@@ -914,45 +913,15 @@ function onSetRentClick(a) {
 
 function SetupCookie() {
   // element variables
-  var a = document.getElementById("captchaApi");
-  var b = document.getElementById("use2Captcha");
-  var g = document.getElementById("antiCaptchaApi");
-  var h = document.getElementById("useAntiCaptcha");
+  // var a = document.getElementById("captchaApi");
+  // var b = document.getElementById("use2Captcha");
+  // var g = document.getElementById("antiCaptchaApi");
+  // var h = document.getElementById("useAntiCaptcha");
   var l = document.getElementById("autovnKey");
 
   var useAutoShutdownVideo_e = document.getElementById("useAutoShutdownVideo");
   var autoShutdownVideo_e = document.getElementById("autoShutdownVideo");
-  var useAutoBet_e = document.getElementById("useAutoBet");
-
-  // setup cookie for 2captcha
-  if ((typeof Cookies.get(apiCookie) === "undefined")) {
-    Cookies.set(apiCookie, "");
-    a.value = ""
-  } else {
-    a.value = Cookies.get(apiCookie)
-  }
-  if ((typeof Cookies.get(use2CaptchaCookie) === "undefined")) {
-    Cookies.set(use2CaptchaCookie, "0");
-    b.checked = false
-  } else {
-    var d = Cookies.get(use2CaptchaCookie) === "0" ? false : true;
-    b.checked = d
-  }
-
-  // setup cookie for anticaptcha
-  if ((typeof Cookies.get(antiCaptchaApiCookie) === "undefined")) {
-    Cookies.set(antiCaptchaApiCookie, "");
-    g.value = ""
-  } else {
-    g.value = Cookies.get(antiCaptchaApiCookie)
-  }
-  if ((typeof Cookies.get(useAntiCaptchaCookie) === "undefined")) {
-    Cookies.set(useAntiCaptchaCookie, "0");
-    h.checked = false
-  } else {
-    var d = Cookies.get(useAntiCaptchaCookie) === "0" ? false : true;
-    h.checked = d
-  }
+  // var useAutoBet_e = document.getElementById("useAutoBet");
 
   // setup cookie for autovnkey
   if ((typeof Cookies.get(autovnKeyCookie) === "undefined")) {
@@ -977,22 +946,8 @@ function SetupCookie() {
     useAutoShutdownVideo_e.checked = d
   }
 
-  // setup cookie for auto bet
-  if ((typeof Cookies.get(useAutoBetCookie) === "undefined")) {
-    Cookies.set(useAutoBetCookie, "0");
-    useAutoBet_e.checked = false
-  } else {
-    var d = Cookies.get(useAutoBetCookie) === "0" ? false : true;
-    useAutoBet_e.checked = d
-  }
-
   // setup value for main variables by monitor
-  captchaApi = a.value;
-  use2Captcha = b.checked;
-  antiCaptchaApi = g.value;
-  useAntiCaptcha = h.checked;
   autovnKey = l.value;
   useAutoShutdownVideo = useAutoShutdownVideo_e.checked;
   autoShutdownVideo = autoShutdownVideo_e.value;
-  useAutoBet = useAutoBet_e.checked;
 }
