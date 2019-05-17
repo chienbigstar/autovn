@@ -673,43 +673,9 @@ function ChooseFlamzyRandom() {
 }
 
 function SolveRecaptchaV2(b) {
-  setTimeout(function() {
-    if (use2Captcha) {
-      var c = document.getElementsByClassName("captchaDivs")[0].getElementsByTagName("iframe")[0].src.split("k=")[1].split("&")[0];
-      var d = "https://2captcha.com/in.php?key=" + b + "&method=userrecaptcha&googlekey=" + c + "&pageurl=" + window.location.href + "&header_acao=1&proxy=123.123.123.123&proxytype=HTTPS";
-      $.ajax({
-        url: d,
-        success: function(a) {
-          if (a.length < 3) {
-            console.log("??? 2CAPTCHA ??? : " + a)
-          } else {
-            if (a.substring(0, 3) == "OK|") {
-              captchaID = a.substring(3);
-              ansUrl = "https://2captcha.com/res.php?key=" + b + "&action=get&id=" + captchaID;
-              console.log("Answer Url : " + ansUrl);
-              setTimeout(WaitingForRecaptchaResult, 15000)
-            } else {
-              console.log("POST RESULT : " + a)
-            }
-          }
-        },
-        fail: function() {
-          Report2Captcha(captchaApi, captchaID);
-          console.log("2CAPTCHA FAILED")
-        }
-      })
-    } else if (useAntiCaptcha) {
-        var antiCaptchaApiKey = antiCaptchaApi;
-        var d=document.getElementById("anticaptcha-imacros-account-key");
-        d||(d=document.createElement("div"),d.innerHTML=""+antiCaptchaApiKey,d.style.display="none",d.id="anticaptcha-imacros-account-key",document.body.appendChild(d));
-        var s=document.createElement("script");
-        s.src="https://cdn.antcpt.com/imacros_inclusion/recaptcha.js?"+Math.random();
-        document.body.appendChild(s);
-        WaitingForRecaptchaResult2();
-    } else {
-      console.log("Please solve captcha")
-    }
-  }, 2000);
+	if (document.querySelector('#g-recaptcha-response').value != '') {
+		document.getElementsByClassName("video-category video-category-questions-div")[0].style.display = 'none';
+	}
 }
 
 function WaitingForRecaptchaResult2() {
