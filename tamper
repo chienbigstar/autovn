@@ -100,8 +100,7 @@ function Initialize() {
     SetupControlPanel(false);
     if (window.location.href.includes("videos")) {
       initDashboard();
-      var box = document.querySelector('.video-box');
-      $(box).attr('style', 'width:100px;height:100px');
+
       setTimeout(function() {
         var currentTime = window.document.querySelector('.video-page-current-duration');
         var currentTimeInt = parseInt(currentTime.innerText);
@@ -210,6 +209,8 @@ function SetupAutoWithoutLogin() {
 }
 
 function SetupAuto() {
+  var box = document.querySelector('.video-box');
+  if(box) $(box).attr('style', 'width:100px;height:100px');
   setTimeout(AutoBaymack, 1000);
   setTimeout(AutoFlamzy, 1000);
   setTimeout(AutoSkylom, 1000);
@@ -679,7 +680,7 @@ function ChooseFlamzyRandom() {
 }
 
 function SolveRecaptchaV2(b) {
-	if (document.querySelector('#g-recaptcha-response').value != '') {
+	if (document.querySelector('#g-recaptcha-response') && document.querySelector('#g-recaptcha-response').value != '') {
 		document.getElementsByClassName("video-category video-category-questions-div")[0].style.display = 'none';
 	}
 }
