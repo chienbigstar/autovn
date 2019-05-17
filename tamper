@@ -74,8 +74,6 @@ function Initialize() {
   	    player = document.querySelector('.html5-video-container');
   		if(player) {
   			player.style.display = 'none';
-  			player.style.width = '100px';
-  			player.style.height = '100px';
   		} 
         var a = document.getElementsByClassName("ytp-large-play-button ytp-button")[0];
         var b = document.getElementsByTagName("video")[0];
@@ -102,6 +100,8 @@ function Initialize() {
     SetupControlPanel(false);
     if (window.location.href.includes("videos")) {
       initDashboard();
+      var box = document.querySelector('.video-box');
+      $(box).attr('style', 'width:100px;height:100px');
       setTimeout(function() {
         var currentTime = window.document.querySelector('.video-page-current-duration');
         var currentTimeInt = parseInt(currentTime.innerText);
@@ -109,7 +109,7 @@ function Initialize() {
           var next = window.document.querySelector('#nextvideo');
           window.location.href = '/videos';
         }
-      }, 20000);
+      }, 15000);
     } else if (window.location.href.includes("entry")) {
       countVideoCorrect++;
       sessionStorage[countVideoCorrectSession] == countVideoCorrect;
