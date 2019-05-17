@@ -71,6 +71,8 @@ function Initialize() {
     var e = (window.location != window.parent.location) ? document.referrer : document.location.href;
     if (e.includes("outbuck") || e.includes("sharkday")  || e.includes("baymack") || e.includes("snuckls") || e.includes("skylom") || e.includes("flamzy") || e.includes("grandool") || e.includes("vipbirdie")) {
       setInterval(function() {
+  	    player = document.querySelector('.html5-video-container');
+  		if(player) player.style.display = 'none';
         var a = document.getElementsByClassName("ytp-large-play-button ytp-button")[0];
         var b = document.getElementsByTagName("video")[0];
         var c = b.currentTime > 0 && !b.paused && !b.ended && b.readyState > 2;
