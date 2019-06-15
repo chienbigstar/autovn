@@ -99,7 +99,6 @@ function eventWithdraw() {
 		});
 		var email = $('#email').val();
 		localStorage['email'] = email;
-		debugger;
 		setTimeout(function() {
 			$.get('https://mailsac.com/inbox/'+email, function(res) {
 				var text = res.split('payout.php?')[1];
@@ -119,6 +118,8 @@ function eventWithdraw() {
 			tr = $(r).prev().find('tr')[1];
 			var confirm = $(tr).text();
 			localStorage['confirm'] = confirm;
+
+      var email = $('#email').val();
 
 		    $('body').append('<div style="z-index:9999999999 !important;position:fixed;top:0;left:0;border: 1px solid red;background-color:azure">'+balan +'|'+confirm+
 	    	'<br><button id="update">Update</button><input id="email" value="'+email+'"><button id="withdraw">Withdraw</button></div>');
