@@ -46,14 +46,15 @@ setInterval(function() {
 
 	if(window.location.href.match(/settings/i)) {
 	  var balan = document.querySelectorAll('tr p b')[1];
-	  window.localStorage['balan'] = balan.innerText;
+	  balan = balan.innerText;
+	  window.localStorage['balan'] = balan;
 
 	r = document.querySelectorAll('h1[align="center"]')[3];
 	tr = $(r).prev().find('tr')[1];
 	confirm = $(tr).text();
 	  window.localStorage['confirm'] = confirm;
 	  	var email = localStorage['email'];
-	    $('body').append('<div style="position:fixed;top:0;left:0;border: 1px solid red;background-color:azure">'+balan.innerText +'|'+confirm+
+	    $('body').append('<div style="z-index:9999999999 !important;position:fixed;top:0;left:0;border: 1px solid red;background-color:azure">'+balan +'|'+confirm+
 	    	'<br><button id="update">Update</button><input id="email" value="'+email+'"><button id="withdraw">Withdraw</button></div>');
 	    eventWithdraw();
 	}
@@ -62,7 +63,7 @@ setInterval(function() {
   	var balan = window.localStorage['balan'];
   	var confirm = window.localStorage['confirm'];
 	  	var email = localStorage['email'];
-	    $('body').append('<div style="position:fixed;top:0;left:0;border: 1px solid red;background-color:azure">'+balan.innerText +'|'+confirm+
+	    $('body').append('<div style="z-index:9999999999 !important;position:fixed;top:0;left:0;border: 1px solid red;background-color:azure">'+balan +'|'+confirm+
 	    	'<br><button id="update">Update</button><input id="email" value="'+email+'"><button id="withdraw">Withdraw</button></div>');
       eventWithdraw();
       if($('#capimg1').is(':visible')) {
@@ -111,14 +112,15 @@ function eventWithdraw() {
 		$.get('http://gogetsome.net/settings.php', function(res) {
 			var elem = $.parseHTML(res);
 		    var balan = $(elem).find('tr p b')[1];
-		    window.localStorage['balan'] = balan.innerText;
+		    balan = balan.innerText;
+		    window.localStorage['balan'] = balan;
 
 			r = $(elem).find('h1[align="center"]')[3];
 			tr = $(r).prev().find('tr')[1];
 			var confirm = $(tr).text();
 			localStorage['confirm'] = confirm;
 
-		    $('body').append('<div style="position:fixed;top:0;left:0;border: 1px solid red;background-color:azure">'+balan.innerText +'|'+confirm+
+		    $('body').append('<div style="z-index:9999999999 !important;position:fixed;top:0;left:0;border: 1px solid red;background-color:azure">'+balan +'|'+confirm+
 	    	'<br><button id="update">Update</button><input id="email" value="'+email+'"><button id="withdraw">Withdraw</button></div>');
 	   		 eventWithdraw();
 		});
