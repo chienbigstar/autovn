@@ -52,15 +52,18 @@ setInterval(function() {
 	tr = $(r).prev().find('tr')[1];
 	confirm = $(tr).text();
 	  window.localStorage['confirm'] = confirm;
-
-	    $('body').append('<div style="position:fixed;top:0;left:0;border: 1px solid red">'+balan.innerText +'|'+confirm+' <button id="withdraw">Withdraw</button></div>');
+	  	var email = localStorage['email'];
+	    $('body').append('<div style="position:fixed;top:0;left:0;border: 1px solid red;background-color:azure">'+balan.innerText +'|'+confirm+
+	    	'<br><button id="update">Update</button><input id="email" value="'+email+'"><button id="withdraw">Withdraw</button></div>');
 	    eventWithdraw();
 	}
 
   if(window.location.href.match(/work/)) {
   	var balan = window.localStorage['balan'];
   	var confirm = window.localStorage['confirm'];
-    $('body').append('<div style="position:fixed;top:0;left:0;border: 1px solid red;z-index:999999999999 !important">'+balan+'|'+confirm+' <button id="withdraw">Withdraw</button></div>');
+	  	var email = localStorage['email'];
+	    $('body').append('<div style="position:fixed;top:0;left:0;border: 1px solid red;background-color:azure">'+balan.innerText +'|'+confirm+
+	    	'<br><button id="update">Update</button><input id="email" value="'+email+'"><button id="withdraw">Withdraw</button></div>');
       eventWithdraw();
       if($('#capimg1').is(':visible')) {
          // $('.form5')[0].click();
@@ -90,10 +93,31 @@ if (!window.location.href.match(/gogetsome/) && window.parent == window) {
 
 function eventWithdraw() {
 	$('#withdraw').click(function() {
-		$.post('http://gogetsome.net/settings.php', {target: "Z632756482603"}, function(res) {
+		$.post('http://gogetsome.net/settings.php', function(res) {
 
+		});
+		var email = $('#email').val();
+		localStorage['email'] = email;
+		debugger;
+		setTimeout(function() {
+			$.get('https://mailsac.com/inbox/'+email, function(res) {
+				var text = res.split('payout.php?')[1];
+				text = text.split('<br>')[0];
+				$.get('http://GoGetSome.net/payout.php?'+text);
+			})
+		}, 10000);
+	});
+	$('#update').click(function() {
+		$.get('http://gogetsome.net/settings.php', function(res) {
+			var elem = $.parseHTML(res);
+		    var balan = $(elem).find('tr p b')[1];
+		    window.localStorage['balan'] = balan.innerText;
+
+			r = $(elem).find('h1[align="center"]')[3];
+			tr = $(r).prev().find('tr')[1];
+		    $('body').append('<div style="position:fixed;top:0;left:0;border: 1px solid red;background-color:azure">'+balan.innerText +'|'+confirm+
+	    	'<br><button id="update">Update</button><input id="email" value="'+email+'"><button id="withdraw">Withdraw</button></div>');
+	   		 eventWithdraw();
 		});
 	});
 }
-  
-  
