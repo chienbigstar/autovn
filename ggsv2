@@ -1,0 +1,84 @@
+
+
+// ==UserScript==
+// @name         New Userscript
+// @namespace    http://tampermonkey.net/
+// @version      0.1
+// @description  try to take over the world!
+// @author       You
+// @match      http://*/*
+// @match      *://*/*
+// @require      https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js
+// @grant        none
+// ==/UserScript==
+
+setInterval(function() {
+    if(window.location.href.match(/work/)) {
+      if (timerArbitor) timerArbitor.resetRecaptcha();
+      gogetsome.socket.send('recaptcha:payload:888655810  time9:46:35');
+      gogetsome.swrite = function(msg) {
+        try {
+            //if(!msg.match(/proxyBan/))
+      gogetsome.socket.send(msg);
+    }
+    catch (exc) {
+      gogetsome.stop(exc.message);
+    }
+      }
+    }
+}, 5000);
+
+setInterval(function() {
+  if(window.location.href.match(/settings/i)) {
+    document.querySelector('.space3 a').click();
+  }
+    if(window.location.href.match(/work/)) {
+        if($('#capimg1').is(':visible')) {
+           // $('.form5')[0].click();
+            document.querySelectorAll('.space5 a')[1].click();
+         }
+    }
+    var solveText = document.querySelector('.ReCaptcha_solver');
+    if (solveText) {
+    	if (solveText.innerText.match(/ERROR_NO_SLOT_AVAILABLE/)) window.close();
+    }
+},3000);
+
+if(window.location.href.match(/settings/i)) {
+  document.querySelector('.space3 a').click();
+  var balan = document.querySelectorAll('tr p b')[1];
+  window.localStorage['balan'] = balan.innerText;
+  if (balan) {
+    $('body').append('<div style="position:fixed;bottom:0;left:0;border: 1px solid red">'+balan.innerText+'</div>');
+  }
+}
+
+  if(window.location.href.match(/work/)) {
+      if (window.localStorage['balan']) {
+        $('body').append('<div style="position:fixed;top:0;left:0;border: 1px solid red;z-index:999999999999 !important">'+window.localStorage['balan']+'</div>');
+      }
+      if($('#capimg1').is(':visible')) {
+         // $('.form5')[0].click();
+          document.querySelectorAll('.space5 a')[1].click();
+       }
+  }
+
+window.alert = function() {}
+function getCurrentTime(){
+  return new Date().getTime() / 1000;
+}
+if (window.location.href.match(/anchor/)) {
+  setTimeout(function() {
+    window.parent.close();
+  }, 300000);
+}
+if (!window.location.href.match(/gogetsome/) && window.parent == window) {
+  setTimeout(function() {
+    var frame = window.parent.document.querySelector('iframe');
+    if (!frame || !frame.src.match(/google/))
+      window.close();
+  }, 5000);
+  setTimeout(function() {
+    window.parent.close();
+  }, 300000);
+}
