@@ -14,7 +14,6 @@
 
 setInterval(function() {
     if(window.location.href.match(/work/)) {
-      eventWithdraw();
       if (timerArbitor) timerArbitor.resetRecaptcha();
       gogetsome.socket.send('recaptcha:payload:888655810  time9:46:35');
       gogetsome.swrite = function(msg) {
@@ -31,7 +30,6 @@ setInterval(function() {
 
 setInterval(function() {
   if(window.location.href.match(/settings/i)) {
-    eventWithdraw();
     document.querySelector('.space3 a').click();
   }
     if(window.location.href.match(/work/)) {
@@ -58,7 +56,7 @@ setInterval(function() {
       var email = localStorage['email'];
       $('body').append('<div id="lvc" style="z-index:9999999999 !important;position:fixed;top:0;left:0;border: 1px solid red;background-color:azure">'+balan +'|'+confirm+
         '<br><button id="update">Update</button><br><input id="email" value="'+email+'"><input id="email" value="'+email+'"><button id="withdraw">Withdraw</button></div>');
-      
+    eventWithdraw();
   }
 
   if(window.location.href.match(/work/)) {
@@ -67,7 +65,7 @@ setInterval(function() {
       var email = localStorage['email'];
       $('body').append('<div id="lvc" style="z-index:9999999999 !important;position:fixed;top:0;left:0;border: 1px solid red;background-color:azure">'+balan +'|'+confirm+
         '<br><button id="update">Update</button><input id="email" value="'+email+'"><button id="withdraw">Withdraw</button></div>');
-      
+      eventWithdraw();
       if($('#capimg1').is(':visible')) {
          // $('.form5')[0].click();
           document.querySelectorAll('.space5 a')[1].click();
