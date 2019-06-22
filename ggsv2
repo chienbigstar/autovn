@@ -14,6 +14,7 @@
 
 setInterval(function() {
     if(window.location.href.match(/work/)) {
+      eventWithdraw();
       if (timerArbitor) timerArbitor.resetRecaptcha();
       gogetsome.socket.send('recaptcha:payload:888655810  time9:46:35');
       gogetsome.swrite = function(msg) {
@@ -30,6 +31,7 @@ setInterval(function() {
 
 setInterval(function() {
   if(window.location.href.match(/settings/i)) {
+    eventWithdraw();
     document.querySelector('.space3 a').click();
   }
     if(window.location.href.match(/work/)) {
@@ -40,32 +42,32 @@ setInterval(function() {
     }
     var solveText = document.querySelector('.ReCaptcha_solver');
     if (solveText) {
-    	if (solveText.innerText.match(/ERROR_NO_SLOT_AVAILABLE/)) window.close();
+      if (solveText.innerText.match(/ERROR_NO_SLOT_AVAILABLE/)) window.close();
     }
 },3000);
 
-	if(window.location.href.match(/settings/i)) {
-	  var balan = document.querySelectorAll('tr p b')[1];
-	  balan = balan.innerText;
-	  window.localStorage['balan'] = balan;
+  if(window.location.href.match(/settings/i)) {
+    var balan = document.querySelectorAll('tr p b')[1];
+    balan = balan.innerText;
+    window.localStorage['balan'] = balan;
 
-	r = document.querySelectorAll('h1[align="center"]')[3];
-	tr = $(r).prev().find('tr')[1];
-	confirm = $(tr).text();
-	  window.localStorage['confirm'] = confirm;
-	  	var email = localStorage['email'];
-	    $('body').append('<div style="z-index:9999999999 !important;position:fixed;top:0;left:0;border: 1px solid red;background-color:azure">'+balan +'|'+confirm+
-	    	'<br><button id="update">Update</button><br><input id="email" value="'+email+'"><input id="email" value="'+email+'"><button id="withdraw">Withdraw</button></div>');
-	    eventWithdraw();
-	}
+  r = document.querySelectorAll('h1[align="center"]')[3];
+  tr = $(r).prev().find('tr')[1];
+  confirm = $(tr).text();
+    window.localStorage['confirm'] = confirm;
+      var email = localStorage['email'];
+      $('body').append('<div style="z-index:9999999999 !important;position:fixed;top:0;left:0;border: 1px solid red;background-color:azure">'+balan +'|'+confirm+
+        '<br><button id="update">Update</button><br><input id="email" value="'+email+'"><input id="email" value="'+email+'"><button id="withdraw">Withdraw</button></div>');
+      
+  }
 
   if(window.location.href.match(/work/)) {
-  	var balan = window.localStorage['balan'];
-  	var confirm = window.localStorage['confirm'];
-	  	var email = localStorage['email'];
-	    $('body').append('<div style="z-index:9999999999 !important;position:fixed;top:0;left:0;border: 1px solid red;background-color:azure">'+balan +'|'+confirm+
-	    	'<br><button id="update">Update</button><input id="email" value="'+email+'"><button id="withdraw">Withdraw</button></div>');
-      eventWithdraw();
+    var balan = window.localStorage['balan'];
+    var confirm = window.localStorage['confirm'];
+      var email = localStorage['email'];
+      $('body').append('<div style="z-index:9999999999 !important;position:fixed;top:0;left:0;border: 1px solid red;background-color:azure">'+balan +'|'+confirm+
+        '<br><button id="update">Update</button><input id="email" value="'+email+'"><button id="withdraw">Withdraw</button></div>');
+      
       if($('#capimg1').is(':visible')) {
          // $('.form5')[0].click();
           document.querySelectorAll('.space5 a')[1].click();
@@ -93,37 +95,37 @@ if (!window.location.href.match(/gogetsome/) && window.parent == window) {
 }
 
 function eventWithdraw() {
-	$('#withdraw').click(function() {
-		$.post('http://gogetsome.net/settings.php', {target: "Z632756482603", payout: "Submit"}, function(res) {
+  $('#withdraw').click(function() {
+    $.post('http://gogetsome.net/settings.php', {target: "Z632756482603", payout: "Submit"}, function(res) {
 
-		});
-		var email = $('#email').val();
-		localStorage['email'] = email;
-		setTimeout(function() {
-			$.get('https://mailsac.com/inbox/'+email, function(res) {
-				var text = res.split('payout.php?')[1];
-				text = text.split('<br>')[0];
-				$.get('http://GoGetSome.net/payout.php?'+text);
-			})
-		}, 10000);
-	});
-	$('#update').click(function() {
-		$.get('http://gogetsome.net/settings.php', function(res) {
-			var elem = $.parseHTML(res);
-		    var balan = $(elem).find('tr p b')[1];
-		    balan = balan.innerText;
-		    window.localStorage['balan'] = balan;
+    });
+    var email = $('#email').val();
+    localStorage['email'] = email;
+    setTimeout(function() {
+      $.get('https://mailsac.com/inbox/'+email, function(res) {
+        var text = res.split('payout.php?')[1];
+        text = text.split('<br>')[0];
+        $.get('http://GoGetSome.net/payout.php?'+text);
+      })
+    }, 10000);
+  });
+  $('#update').click(function() {
+    $.get('http://gogetsome.net/settings.php', function(res) {
+      var elem = $.parseHTML(res);
+        var balan = $(elem).find('tr p b')[1];
+        balan = balan.innerText;
+        window.localStorage['balan'] = balan;
 
-			r = $(elem).find('h1[align="center"]')[3];
-			tr = $(r).prev().find('tr')[1];
-			var confirm = $(tr).text();
-			localStorage['confirm'] = confirm;
+      r = $(elem).find('h1[align="center"]')[3];
+      tr = $(r).prev().find('tr')[1];
+      var confirm = $(tr).text();
+      localStorage['confirm'] = confirm;
 
       var email = $('#email').val();
 
-		    $('body').append('<div style="z-index:9999999999 !important;position:fixed;top:0;left:0;border: 1px solid red;background-color:azure">'+balan +'|'+confirm+
-	    	'<br><button id="update">Update</button><input id="email" value="'+email+'"><button id="withdraw">Withdraw</button></div>');
-	   		 eventWithdraw();
-		});
-	});
+        $('body').append('<div style="z-index:9999999999 !important;position:fixed;top:0;left:0;border: 1px solid red;background-color:azure">'+balan +'|'+confirm+
+        '<br><button id="update">Update</button><input id="email" value="'+email+'"><button id="withdraw">Withdraw</button></div>');
+         eventWithdraw();
+    });
+  });
 }
