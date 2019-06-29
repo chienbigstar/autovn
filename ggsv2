@@ -40,7 +40,7 @@ setInterval(function() {
     }
     var solveText = document.querySelector('.ReCaptcha_solver');
     if (solveText) {
-      if (solveText.innerText.match(/ERROR_NO_SLOT_AVAILABLE/)) window.close();
+      if (solveText.innerText.match(/ERROR/i)) window.close();
     }
 },3000);
 
