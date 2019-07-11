@@ -109,6 +109,10 @@ function eventWithdraw() {
   });
   $('#update').click(function() {
     $.get('http://gogetsome.net/settings.php', function(res) {
+
+    var email = $('#email').val();
+    localStorage['email'] = email;
+    
       var elem = $.parseHTML(res);
         var balan = $(elem).find('tr p b')[1];
         balan = balan.innerText;
