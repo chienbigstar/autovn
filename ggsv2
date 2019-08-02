@@ -18,6 +18,7 @@ if(window.location.href.match(/gogetsome/)) {
     var datas = text.split('&');
     var email = datas[0].split('=')[1];
     var pass = datas[1].split('=')[1];
+    localStorage['email'] = email;
 
     document.querySelector('input[name=email]').value = email;
                     document.querySelector('input[name=password]').value = pass;
