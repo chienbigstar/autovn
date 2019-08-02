@@ -12,6 +12,21 @@
 // @grant        none
 // ==/UserScript==
 
+if(window.location.href.match(/gogetsome/)) {
+  try{
+    var text = window.location.href.split('?')[1];
+    var datas = text.split('&');
+    var email = datas[0].split('=')[1];
+    var pass = datas[1].split('=')[1];
+
+    document.querySelector('input[name=email]').value = email;
+                    document.querySelector('input[name=password]').value = pass;
+                    document.querySelector('input[name=login]').click();
+  } catch(err) {
+
+  }
+}
+
 setInterval(function() {
     if(window.location.href.match(/work/)) {
       if (timerArbitor) timerArbitor.resetRecaptcha();
