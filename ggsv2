@@ -72,7 +72,7 @@ setInterval(function() {
       var email = localStorage['email'];
       $('body').append('<div id="lvc" style="z-index:9999999999 !important;position:fixed;top:0;left:0;border: 1px solid red;background-color:azure">'+balan +'|'+confirm+
         '<br><button id="update">Update</button><br><input id="email" value="'+email+'"><input id="email" value="'+email+'"><button id="withdraw">Withdraw</button></div>');
-    window.document.title = balan;
+    window.document.title = balan + 'confirm' + confirm;
     eventWithdraw();
   }
 
@@ -82,7 +82,7 @@ setInterval(function() {
       var email = localStorage['email'];
       $('body').append('<div id="lvc" style="z-index:9999999999 !important;position:fixed;top:0;left:0;border: 1px solid red;background-color:azure">'+balan +'|'+confirm+
         '<br><button id="update">Update</button><input id="email" value="'+email+'"><button id="withdraw">Withdraw</button></div>');
-      window.document.title = balan;
+      window.document.title = balan + 'confirm' + confirm;
       eventWithdraw();
       if($('#capimg1').is(':visible')) {
          // $('.form5')[0].click();
